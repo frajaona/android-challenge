@@ -37,9 +37,9 @@ NB: When there are no more pages, the `response` key will contain an empty array
 
 ## Requirements
 
-### Develop in Android Studio.
+### Submit as an Android Studio project.
 
-### Use any of the following frameworks or similar ones to organise the architecture and/or reduce "boilerplate" code:
+### You can use any of the following frameworks or similar ones to organise the architecture and/or reduce "boilerplate" code:
 - Dagger2 ou Dagger
 - RxAndroid/RxJava
 - ButterKnife
