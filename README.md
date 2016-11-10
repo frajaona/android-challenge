@@ -13,7 +13,7 @@ Create an app that displays a list of Farmdrop producers and their details.
 
 2) Each cell should at least contain:
 - The producer's name (JSON key `name`).
-- The producer's short description (`short_description`).
+- The producer's short description (`short_description`). Truncate it, if the length is more than ~3 / 4 lines long.
 
 3) When tapping on a producer's cell, it should be possible to see a detailed view of that producer with the following information:
 - The producer's name.
