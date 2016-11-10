@@ -1,6 +1,6 @@
 # Android Challenge
 
-Create an app that displays a list of producers and their details.
+Create an app that displays a list of Farmdrop producers and their details.
 
 //Criar um aplicativo de filmes que consulte a API do TheMovieDatabase.
 
@@ -33,50 +33,60 @@ Create an app that displays a list of producers and their details.
 
 *****
 
-## Extras gerais:
+## "Requirements"
 
-### Desenvolver no Android Studio.
+### Develop in Android Studio.
 
-### Uso de algum framework ou biblioteca para organização de arquitetura e/ou redução de código "boilerplate":
+### Use any of the following frameworks to organise the architecutre and/or reduce "boilerplate" code:
 - Dagger2 ou Dagger
 - RxAndroid/RxJava
 - ButterKnife
 - Dart
 - Roboguice 3
 
-### Gestão de dependências no projeto:
+### Dependency management in project:
 - Gradle
 - Maven
 
-### Mapeamento JSON ou XML -> POJO:
+### Mapping of JSON/XML to POJO:
 - GSON
 - Jackson Mapper
 - Moshi
 
-### Framework para comunicação com API's externas:
+### Framework to communicate with external APIs:
 - Volley
 - Ion
 - Wasp
 - Retrofit
 
-### Carregamento de imagens usando padrão de "lazyload":
+### "Lazy loading" of images using one of the following frameworks:
 - Picasso
 - Fresco
 - Glide
 - Ion
 - Volley
 
-As bibliotecas citadas são apenas sugestões, sinta-se a vontade para usar outras.
+The libraries are only suggestions, feel free to use others.
 
 *****
 
-## <a name="criterios_avaliacao"/>Alguns pontos que podem ser avaliados
+## <a name="criterios_avaliacao"/>Things to consider:
 
-- Qualidade é melhor que quantidade.
-- Evite fazer requisições desnecessárias. Exemplos de tratamentos:
-    - Cache de imagens.
-    - Tente manter o estado durante rotações (caso seja permitido).
-- Uso de níveis de SDK compatíveis com o mercado.
+- Quality is better than quantity
+- Avoid unnecessary network requests. Examples:
+    - Image caching
+    - Try to handle layout on device rotation
+- Use SDK versions compatible with Google Play
+- Maintain a consistent navigation structure, be it for ???
+- Compatibility and good use of additional libraries: Support Library v4, Appcompat v7, Design Library.
+- Use of new components and/or Material Design: Toolbar, RecyclerView, AppBar, CoordinatorLayout, SnackBar, FloatActionButton, etc.
+- Clean and structured code
+- Use of design patterns
+- Device orientation handling is not required
+- Unit tests are considered extras
+
+-----
+
 - Mantenha uma estrutura consistente de navegação, seja por abas ou menu deslizante, conforme o caso.
 - Preocupação com compatibilidade e bom uso de biblioteca de suporte: Support Library v4, Appcompat v7, Design Library.
 - Uso de componentes novos e/ou do Material Design: Toolbar, RecyclerView, AppBar, CoordinatorLayout, SnackBar, FloatActionButton e etc...
@@ -87,7 +97,7 @@ As bibliotecas citadas são apenas sugestões, sinta-se a vontade para usar outr
 
 *****
 
-### **ATENÇÃO** ###
+### **ATTENTION** ###
 
-Não faça PUSH diretamente para ESTE repositório!!!
+Do not directly PUSH to this repository!!!
 
