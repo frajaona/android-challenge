@@ -32,6 +32,16 @@ Note: If you want, you can fetch an invididual producer's date by specifying the
 
 NB: When there are no more pages, the `response` key will contain an empty array.
 
+## Search locally for producers.
+
+### 1) Persist the list of producers on the device.
+- Use any technology or method you desire.
+- Make sure that the list is kept up to date (or downloaded every time if you like) with the server data.
+
+### 2) Add a searchbar to your list of producers created as part of task A.
+- When the user types a string in that search bar, display only the producer's whose name contains the search string.
+- Allow the user to cancel such or clear the search bar.
+
 
 *****
 
