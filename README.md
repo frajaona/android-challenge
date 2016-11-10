@@ -33,30 +33,6 @@ Note: If you want, you can fetch an invididual producer's date by specifying the
 NB: When there are no more pages, the `response` key will contain an empty array.
 
 
-
-## Navegação de filmes usando a [TheMovieDatabase API](https://www.themoviedb.org/documentation/api)
-
-### <a name="filmes_cartaz" />1) Listagem de [filmes que estão em cartaz](http://docs.themoviedb.apiary.io/#reference/movies/now_playing)
-- Use o parâmetro `language` com o valor pt (não há suporte para pt_BR) ou en.
-- Campos sugeridos: Title (caso use a lingua `pt`), name, release date e vote average.
-- Mostre uma imagem, usando os campos `backdrop_path` ou `poster_path`
-    - Url para Imagens podem ser montadas de acordo com a [documentação](http://docs.themoviedb.apiary.io/#introduction/configuration)
-- A exibição pode ser em formato de lista ou grade
-    - No caso de grade, exiba apenas o atributo `Title`.
-
-### 2) Listagem de [filmes populares](http://docs.themoviedb.apiary.io/#reference/movies/moviepopular)
-- Mesmas funcionalidades de [__filmes em cartaz__](#filmes_cartaz)
-
-### 3) Listagem de [filmes mais bem avaliados](http://docs.themoviedb.apiary.io/#reference/movies/movietoprated)
-- Mesmas funcionalidades de [__filmes em cartaz__](#filmes_cartaz)
-
-### 4) [Detalhe do filme](http://docs.themoviedb.apiary.io/#reference/movies/movieid)
-
-### 5) [Trailers de filme](http://docs.themoviedb.apiary.io/#reference/movies/movieidvideos)
-- Youtube
-
-### 6) Busca de filmes
-
 *****
 
 ## Requirements
