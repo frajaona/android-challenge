@@ -11,11 +11,14 @@ Create an app that displays a list of Farmdrop producers and their details.
 A) Use the following API endpoint to fetch a list of producers: [Producers](https://fd-v5-api-release.herokuapp.com/2/producers)
 - No authentication is required for this endpoint.
 - Response will contain a JSON object.
-1. Parse the JSON object to produce a smooth scrolling list of producers.
-2. Each cell should at least contain:
+
+1) Parse the JSON object to produce a smooth scrolling list of producers.
+
+2) Each cell should at least contain:
 - The producer's name (JSON key `name`).
 - The producer's short description (`short_description`).
-3. When tapping on a producer's cell, it should be possible to see a detailed view of that producer with the following information:
+
+3) When tapping on a producer's cell, it should be possible to see a detailed view of that producer with the following information:
 - The producer's name.
 - The producer's image (`images`).
 - The produceer's location (`location`) if available.
