@@ -6,6 +6,34 @@ Create an app that displays a list of Farmdrop producers and their details.
 - Escolher algumas funcionalidades e implementar seguindo os critérios de [avaliação](#criterios_avaliacao)
 - Nenhuma das funcionalidades dos desafios abaixo exigem autenticação do usuário. Podem ser acessados apenas usando alguma(s) chave(s) de aplicação dependendo da API.
 
+## Displaying a list of producers
+
+A) Use the following API endpoint (GET) to fetch a list of producers: `https://fd-v5-api-release.herokuapp.com/2/producers`
+- No authentication is required for this endpoint.
+- Response will contain a JSON object.
+
+1) Parse the JSON object to produce a smooth scrolling list of producers.
+
+2) Each cell should at least contain:
+- The producer's name (JSON key `name`).
+- The producer's short description (`short_description`).
+
+3) When tapping on a producer's cell, it should be possible to see a detailed view of that producer with the following information:
+- The producer's name.
+- The producer's image (`images`).
+- The produceer's location (`location`) if available.
+- The producer's long description (`description`) or the short description is no long description is avaliable.
+
+Note: If you want, you can fetch an invididual producer's date by specifying their id: `https://fd-v5-api.herokuapp.com/2/producers/{id}`
+
+B) Add pagination to your list of producers created as part of task A. You can use the same endpoint, and pass the followwuing query parameters:
+- `page`: The page number (first page is 1).
+- `per_page_limit`: The size of the page.
+
+NB: When there are no more pages, the `response` key will contain an empty array.
+
+
+
 ## Navegação de filmes usando a [TheMovieDatabase API](https://www.themoviedb.org/documentation/api)
 
 ### <a name="filmes_cartaz" />1) Listagem de [filmes que estão em cartaz](http://docs.themoviedb.apiary.io/#reference/movies/now_playing)
