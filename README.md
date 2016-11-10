@@ -6,7 +6,21 @@ Create an app that displays a list of Farmdrop producers and their details.
 - Escolher algumas funcionalidades e implementar seguindo os critérios de [avaliação](#criterios_avaliacao)
 - Nenhuma das funcionalidades dos desafios abaixo exigem autenticação do usuário. Podem ser acessados apenas usando alguma(s) chave(s) de aplicação dependendo da API.
 
-## Navegação de filmes usando a [TheMovieDatabase API](https://www.themoviedb.org/documentation/api)
+## Fetching a list of producers
+
+A) Use the following API endpoint to fetch a list of producers: [Producers](https://fd-v5-api-release.herokuapp.com/2/producers)
+- No authentication is required for this endpoint.
+- Response will contain a JSON object.
+1. Parse the JSON object to produce a smooth scrolling list of producers.
+2. Each cell should at least contain:
+- The producer's name (JSON key `name`).
+- The producer's short description (`short_description`).
+3. When tapping on a producer's cell, it should be possible to see a detailed view of that producer with the following information:
+- The producer's name.
+- The producer's image (`images`).
+- The produceer's location (`location`) if available.
+- The producer's long description (`description`) or the short description is no long description is avaliable.
+
 
 ### <a name="filmes_cartaz" />1) Listagem de [filmes que estão em cartaz](http://docs.themoviedb.apiary.io/#reference/movies/now_playing)
 - Use o parâmetro `language` com o valor pt (não há suporte para pt_BR) ou en.
