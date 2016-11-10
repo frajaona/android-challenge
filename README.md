@@ -21,7 +21,7 @@ Create an app that displays a list of Farmdrop producers and their details.
 - The produceer's location (`location`) if available.
 - The producer's long description (`description`) or the short description is no long description is avaliable.
 
-Note: If you want, you can fetch an invididual producer's date by specifying their id: `https://fd-v5-api.herokuapp.com/2/producers/{id}`
+Note: If you want, you can fetch an invididual producer's date by specifying their id: `https://fd-v5-api-release.herokuapp.com/2/producers/{id}`
 
 ### B) Add pagination to your list of producers created as part of task A. You can use the same endpoint, and pass the followwuing query parameters:
 - `page`: The page number (first page is 1).
