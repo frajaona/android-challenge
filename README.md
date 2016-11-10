@@ -17,7 +17,7 @@ Create an app that displays a list of Farmdrop producers and their details.
 
 3) When tapping on a producer's cell, it should be possible to see a detailed view of that producer with the following information:
 - The producer's name.
-- The producer's image (`images`).
+- The producer's image (`images`). Use the first one if there's more than one.
 - The produceer's location (`location`) if available.
 - The producer's long description (`description`) or the short description is no long description is avaliable.
 
