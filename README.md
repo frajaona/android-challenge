@@ -6,24 +6,7 @@ Create an app that displays a list of Farmdrop producers and their details.
 - Escolher algumas funcionalidades e implementar seguindo os critérios de [avaliação](#criterios_avaliacao)
 - Nenhuma das funcionalidades dos desafios abaixo exigem autenticação do usuário. Podem ser acessados apenas usando alguma(s) chave(s) de aplicação dependendo da API.
 
-## Fetching a list of producers
-
-A) Use the following API endpoint to fetch a list of producers: [Producers](https://fd-v5-api-release.herokuapp.com/2/producers)
-- No authentication is required for this endpoint.
-- Response will contain a JSON object.
-
-1) Parse the JSON object to produce a smooth scrolling list of producers.
-
-2) Each cell should at least contain:
-- The producer's name (JSON key `name`).
-- The producer's short description (`short_description`).
-
-3) When tapping on a producer's cell, it should be possible to see a detailed view of that producer with the following information:
-- The producer's name.
-- The producer's image (`images`).
-- The produceer's location (`location`) if available.
-- The producer's long description (`description`) or the short description is no long description is avaliable.
-
+## Navegação de filmes usando a [TheMovieDatabase API](https://www.themoviedb.org/documentation/api)
 
 ### <a name="filmes_cartaz" />1) Listagem de [filmes que estão em cartaz](http://docs.themoviedb.apiary.io/#reference/movies/now_playing)
 - Use o parâmetro `language` com o valor pt (não há suporte para pt_BR) ou en.
@@ -73,6 +56,7 @@ A) Use the following API endpoint to fetch a list of producers: [Producers](http
 - Ion
 - Wasp
 - Retrofit
+- Robospice
 
 ### "Lazy loading" of images using one of the following frameworks:
 - Picasso
@@ -88,9 +72,9 @@ The libraries are only suggestions, feel free to use others.
 ## <a name="criterios_avaliacao"/>Evaluation criteria:
 
 - Quality is better than quantity
-- Avoid unnecessary network requests. Examples:
+- Avoid unnecessary method calls. Examples:
     - Image caching
-    - Try to handle layout on device rotation
+    - Layout handling on device rotation
 - Use of SDK versions compatible with Google Play
 - Maintain a consistent navigation structure, be it tabs or sliding menus
 - Compatibility and good use of additional libraries: Support Library v4, Appcompat v7, Design Library.
@@ -99,16 +83,6 @@ The libraries are only suggestions, feel free to use others.
 - Use of design patterns
 - Device orientation handling is not required
 - Unit tests are considered extras
-
------
-
-- Mantenha uma estrutura consistente de navegação, seja por abas ou menu deslizante, conforme o caso.
-- Preocupação com compatibilidade e bom uso de biblioteca de suporte: Support Library v4, Appcompat v7, Design Library.
-- Uso de componentes novos e/ou do Material Design: Toolbar, RecyclerView, AppBar, CoordinatorLayout, SnackBar, FloatActionButton e etc...
-- Preocupação com organização de código/padronização.
-- Uso de design patterns.
-- Não é obrigatório tratamento para mudança de orientação, caso permita, será avaliado.
-- Testes unitários ou instrumentados serão considerados extras.
 
 *****
 
