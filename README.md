@@ -1,6 +1,8 @@
 # Android Challenge
 
-Criar um aplicativo de filmes que consulte a API do TheMovieDatabase.
+Create an app that displays a list of producers and their details.
+
+//Criar um aplicativo de filmes que consulte a API do TheMovieDatabase.
 
 ## Regras:
 - Escolher algumas funcionalidades e implementar seguindo os critérios de [avaliação](#criterios_avaliacao)
