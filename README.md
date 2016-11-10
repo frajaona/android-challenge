@@ -2,13 +2,10 @@
 
 Create an app that displays a list of Farmdrop producers and their details.
 
-## Regras:
-- Escolher algumas funcionalidades e implementar seguindo os critérios de [avaliação](#criterios_avaliacao)
-- Nenhuma das funcionalidades dos desafios abaixo exigem autenticação do usuário. Podem ser acessados apenas usando alguma(s) chave(s) de aplicação dependendo da API.
-
 ## Displaying a list of producers
 
-### A) Use the following API endpoint (GET) to fetch a list of producers: `https://fd-v5-api-release.herokuapp.com/2/producers`
+### A) Use the following API endpoint (GET) to fetch a list of producers: 
+- Use this enpoint: `https://fd-v5-api-release.herokuapp.com/2/producers`
 - No authentication is required for this endpoint.
 - Response will contain a JSON object.
 
