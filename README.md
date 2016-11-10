@@ -2,8 +2,6 @@
 
 Create an app that displays a list of Farmdrop producers and their details.
 
-//Criar um aplicativo de filmes que consulte a API do TheMovieDatabase.
-
 ## Regras:
 - Escolher algumas funcionalidades e implementar seguindo os critérios de [avaliação](#criterios_avaliacao)
 - Nenhuma das funcionalidades dos desafios abaixo exigem autenticação do usuário. Podem ser acessados apenas usando alguma(s) chave(s) de aplicação dependendo da API.
@@ -33,11 +31,11 @@ Create an app that displays a list of Farmdrop producers and their details.
 
 *****
 
-## "Requirements"
+## Requirements
 
 ### Develop in Android Studio.
 
-### Use any of the following frameworks to organise the architecutre and/or reduce "boilerplate" code:
+### Use any of the following frameworks or similar ones to organise the architecture and/or reduce "boilerplate" code:
 - Dagger2 ou Dagger
 - RxAndroid/RxJava
 - ButterKnife
@@ -70,14 +68,14 @@ The libraries are only suggestions, feel free to use others.
 
 *****
 
-## <a name="criterios_avaliacao"/>Things to consider:
+## <a name="criterios_avaliacao"/>Evaluation criteria:
 
 - Quality is better than quantity
 - Avoid unnecessary network requests. Examples:
     - Image caching
     - Try to handle layout on device rotation
-- Use SDK versions compatible with Google Play
-- Maintain a consistent navigation structure, be it for ???
+- Use of SDK versions compatible with Google Play
+- Maintain a consistent navigation structure, be it tabs or sliding menus
 - Compatibility and good use of additional libraries: Support Library v4, Appcompat v7, Design Library.
 - Use of new components and/or Material Design: Toolbar, RecyclerView, AppBar, CoordinatorLayout, SnackBar, FloatActionButton, etc.
 - Clean and structured code
