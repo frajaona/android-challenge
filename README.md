@@ -80,19 +80,18 @@ The libraries are only suggestions, feel free to use others.
 
 *****
 
-## <a name="criterios_avaliacao"/>Evaluation criteria:
+## <a name="evaluation_criteria"/>Evaluation criteria:
 
 - Quality is better than quantity
-- Avoid unnecessary method calls. Examples:
-    - Image caching
-    - Layout handling on device rotation
 - Use of SDK versions compatible with Google Play
 - Maintain a consistent navigation structure, be it tabs or sliding menus
+- Device orientation handling is not required, although we expect you to structure your code to be able to easily add support for this
+- Our endpoints use the following http methods: POST, GET, PUT, PATCH, and DELETE, so choose a network framework that supports all of them.
 - Compatibility and good use of additional libraries: Support Library v4, Appcompat v7, Design Library.
 - Use of new components and/or Material Design: Toolbar, RecyclerView, AppBar, CoordinatorLayout, SnackBar, FloatActionButton, etc.
 - Clean and structured code
 - Use of design patterns
-- Device orientation handling is not required
+- We make use of a lot of images, including using them for animation when navigating from screen to screen.
 - Unit tests are considered extras
 
 *****
