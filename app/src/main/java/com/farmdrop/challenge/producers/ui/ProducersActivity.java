@@ -56,7 +56,7 @@ public class ProducersActivity extends AppCompatActivity {
 
         @Override
         public void onError(@ProducersProvider.Error int error) {
-
+            mProducersListFragment.displayError(error);
         }
     }
 }

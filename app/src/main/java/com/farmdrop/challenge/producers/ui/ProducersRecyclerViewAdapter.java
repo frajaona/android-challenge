@@ -41,9 +41,8 @@ public class ProducersRecyclerViewAdapter extends RecyclerView.Adapter<Producers
     @NonNull
     private final LayoutInflater mLayoutInflater;
 
-    public ProducersRecyclerViewAdapter(@NonNull Context context, @Nullable List<Producer> producersList) {
+    public ProducersRecyclerViewAdapter(@NonNull Context context) {
         mLayoutInflater = LayoutInflater.from(context);
-        mProducersList = producersList;
     }
 
     @Override
