@@ -3,7 +3,6 @@ package com.farmdrop.challenge.producers.ui;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.farmdrop.challenge.producers.ProducersApplication;
 import com.farmdrop.challenge.producers.R;
@@ -52,9 +51,7 @@ public class ProducersActivity extends AppCompatActivity {
 
         @Override
         public void onProducersLoaded(@NonNull List<Producer> producers) {
-            for (Producer producer : producers) {
-                Log.d(TAG, "Producer: " + producer.getName());
-            }
+            mProducersListFragment.displayProducers(producers);
         }
 
         @Override
