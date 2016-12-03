@@ -12,7 +12,13 @@ android {
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
+        debug {
+            buildConfigField "String", "FARM_DROP_API_URL", '"https://fd-v5-api-release.herokuapp.com/"'
+        }
+
         release {
+            buildConfigField "String", "FARM_DROP_API_URL", '"https://fd-v5-api-release.herokuapp.com/"'
+
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
@@ -32,4 +38,5 @@ dependencies {
     annotationProcessor "com.google.dagger:dagger-compiler:2.8"     // 03/12/2016
 
     compile 'com.squareup.retrofit2:retrofit:2.1.0'                 // 03/12/2016
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'           // 03/12/2016
 }
