@@ -1,5 +1,6 @@
 package com.farmdrop.challenge.producers.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -26,6 +27,19 @@ public class ProducersActivity extends AppCompatActivity {
 
     private ProducerDetailsFragment mProducerDetailsFragment;
 
+    @NonNull
+    private final OnProducerClickListener mOnProducerClickListener = new OnProducerClickListener() {
+        @Override
+        public void onProducerClick(@NonNull Producer producer) {
+            if (mProducerDetailsFragment != null) {
+                mProducerDetailsFragment.displayProducer(producer);
+            } else {
+                Intent intent = ProducerDetailsActivity.getStartingIntent(ProducersActivity.this, producer);
+                startActivity(intent);
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,7 +62,6 @@ public class ProducersActivity extends AppCompatActivity {
     }
 
     private class ProducersListenerImpl implements ProducersListener {
-
         @Override
         public void onProducersLoaded(@NonNull List<Producer> producers) {
             mProducersListFragment.displayProducers(producers);
@@ -58,5 +71,10 @@ public class ProducersActivity extends AppCompatActivity {
         public void onError(@ProducersProvider.Error int error) {
             mProducersListFragment.displayError(error);
         }
+    }
+
+    @NonNull
+    public OnProducerClickListener getOnProducerClickListener() {
+        return mOnProducerClickListener;
     }
 }

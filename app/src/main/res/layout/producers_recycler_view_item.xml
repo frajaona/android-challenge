@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
+    android:id="@+id/producers_recycler_view_item_layout_root"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_margin="@dimen/producers_recycler_view_item_vertical_margin">
+    android:padding="@dimen/producers_recycler_view_item_padding"
+    android:background="@drawable/selectable_item_background">
 
     <TextView
         android:id="@+id/producers_recycler_view_item_textview_name"

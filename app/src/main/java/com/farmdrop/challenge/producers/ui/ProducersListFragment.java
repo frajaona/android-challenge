@@ -4,6 +4,7 @@ package com.farmdrop.challenge.producers.ui;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.annotation.UiThread;
 import android.support.v4.app.Fragment;
@@ -35,6 +36,17 @@ public class ProducersListFragment extends Fragment {
     TextView mErrorTextView;
 
     private ProducersRecyclerViewAdapter mAdapter;
+
+    @Nullable
+    private OnProducerClickListener mOnProducerClickListener;
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof ProducersActivity) {
+            mOnProducerClickListener = ((ProducersActivity)context).getOnProducerClickListener();
+        }
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_producers_list, container);
@@ -79,7 +91,7 @@ public class ProducersListFragment extends Fragment {
         mRecyclerView.setLayoutManager(layoutManager);
         mRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(context.getResources(), R.drawable.producers_recycler_view_line_divider));
 
-        mAdapter = new ProducersRecyclerViewAdapter(context);
+        mAdapter = new ProducersRecyclerViewAdapter(context, mOnProducerClickListener);
         mRecyclerView.setAdapter(mAdapter);
     }
 

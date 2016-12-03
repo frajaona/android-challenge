@@ -18,20 +18,44 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ProducersRecyclerViewAdapter extends RecyclerView.Adapter<ProducersRecyclerViewAdapter.ProducerViewHolder> {
 
     public static class ProducerViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.producers_recycler_view_item_textview_name)
-        public TextView nameTextView;
+        TextView mNameTextView;
 
         @BindView(R.id.producers_recycler_view_item_textview_short_description)
-        public TextView shortDescriptionTextView;
+        TextView mShortDescriptionTextView;
 
-        public ProducerViewHolder(View itemView) {
+        @Nullable
+        private Producer mProducer;
+
+        @NonNull
+        private final OnProducerClickListener mProducerClickListener;
+
+        public ProducerViewHolder(View itemView, OnProducerClickListener producerClickListener) {
             super(itemView);
+            mProducerClickListener = producerClickListener;
             ButterKnife.bind(this, itemView);
+        }
+
+        public void displayProducer(@NonNull Producer producer) {
+            mProducer = producer;
+            mNameTextView.setText(producer.getName());
+            String shortDescription = producer.getShortDescription();
+            if (!TextUtils.isEmpty(shortDescription)) {
+                mShortDescriptionTextView.setText(producer.getShortDescription());
+            } else {
+                mShortDescriptionTextView.setText(R.string.no_description);
+            }
+        }
+
+        @OnClick(R.id.producers_recycler_view_item_layout_root)
+        public void onClick() {
+            mProducerClickListener.onProducerClick(mProducer);
         }
     }
 
@@ -41,26 +65,24 @@ public class ProducersRecyclerViewAdapter extends RecyclerView.Adapter<Producers
     @NonNull
     private final LayoutInflater mLayoutInflater;
 
-    public ProducersRecyclerViewAdapter(@NonNull Context context) {
+    @NonNull
+    private final OnProducerClickListener mOnProducerClickListener;
+
+    public ProducersRecyclerViewAdapter(@NonNull Context context, @NonNull OnProducerClickListener onProducerClickListener) {
         mLayoutInflater = LayoutInflater.from(context);
+        mOnProducerClickListener = onProducerClickListener;
     }
 
     @Override
     public ProducerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mLayoutInflater.inflate(R.layout.producers_recycler_view_item, parent, false);
-        return new ProducerViewHolder(view);
+        return new ProducerViewHolder(view, mOnProducerClickListener);
     }
 
     @Override
     public void onBindViewHolder(ProducerViewHolder holder, int position) {
         Producer producer = mProducersList.get(position);
-        holder.nameTextView.setText(producer.getName());
-        String shortDescription = producer.getShortDescription();
-        if (!TextUtils.isEmpty(shortDescription)) {
-            holder.shortDescriptionTextView.setText(producer.getShortDescription());
-        } else {
-            holder.shortDescriptionTextView.setText(R.string.no_description);
-        }
+        holder.displayProducer(producer);
     }
 
     @Override
