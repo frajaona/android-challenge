@@ -1,6 +1,9 @@
 package com.farmdrop.challenge.producers.dagger.modules;
 
 import com.farmdrop.challenge.producers.BuildConfig;
+import com.farmdrop.challenge.producers.utils.AndroidNamingFieldStrategy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import javax.inject.Named;
 
@@ -15,10 +18,10 @@ public class FarmdropApiNetModule {
     private static final String KEY_FARMDROP_API_URL = "farmdropApiUrl";
 
     @Provides
-    Retrofit provideRetrofit(@Named(KEY_FARMDROP_API_URL) String farmdropApiUrl) {
+    Retrofit provideRetrofit(@Named(KEY_FARMDROP_API_URL) String farmdropApiUrl, GsonConverterFactory gsonConverterFactory) {
         return new Retrofit.Builder()
             .baseUrl(farmdropApiUrl)
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(gsonConverterFactory)
             .build();
     }
 
@@ -26,5 +29,17 @@ public class FarmdropApiNetModule {
     @Named(KEY_FARMDROP_API_URL)
     String provideFarmdropApiUrl() {
         return BuildConfig.FARM_DROP_API_URL;
+    }
+
+    @Provides
+    GsonConverterFactory provideGsonConverterFactory(Gson gson) {
+        return GsonConverterFactory.create(gson);
+    }
+
+    @Provides
+    Gson provideGson() {
+        return new GsonBuilder()
+            .setFieldNamingStrategy(new AndroidNamingFieldStrategy())
+            .create();
     }
 }
