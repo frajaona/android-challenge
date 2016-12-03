@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 public class Producer {
-    private long mId;
+    private int mId;
     private String mName;
     private String mPermalink;
     private Date mCreatedAt;
@@ -17,7 +17,7 @@ public class Producer {
     private boolean mViaWholesaler;
     private String mWholesalerName;
 
-    public Producer(long id, String name, String permalink, Date createdAt, Date updatedAt, List<Image> images, String shortDescription, String description, String location, boolean viaWholesaler, String wholesalerName) {
+    public Producer(int id, String name, String permalink, Date createdAt, Date updatedAt, List<Image> images, String shortDescription, String description, String location, boolean viaWholesaler, String wholesalerName) {
         mId = id;
         mName = name;
         mPermalink = permalink;
@@ -31,11 +31,11 @@ public class Producer {
         mWholesalerName = wholesalerName;
     }
 
-    public long getId() {
+    public int getId() {
         return mId;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         mId = id;
     }
 

@@ -7,18 +7,20 @@ import android.support.annotation.Nullable;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 public class ProducersProvider {
 
-    @IntDef({ERROR_UNKNOWN, ERROR_NO_INTERNET})
+    @IntDef({ERROR_UNKNOWN, ERROR_NETWORK})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Error {
     }
 
     public static final int ERROR_UNKNOWN = -1;
-    public static final int ERROR_NO_INTERNET = 0;
+    public static final int ERROR_NETWORK = 0;
 
 
     @NonNull
@@ -27,13 +29,40 @@ public class ProducersProvider {
     @Nullable
     private ProducersListener mListener;
 
+    @NonNull
+    private final List<Producer> mProducersList;
+
+
     @Inject
     public ProducersProvider(@NonNull ProducersNetProvider netProvider) {
         mNetProvider = netProvider;
+        mProducersList = new LinkedList<>();
+    }
+
+    public void loadProducers() {
+        mNetProvider.loadProducers(new ProducersListener() {
+            @Override
+            public void onProducersLoaded(@NonNull List<Producer> producers) {
+                mProducersList.addAll(producers);
+                if (mListener != null) {
+                    mListener.onProducersLoaded(producers);
+                }
+            }
+
+            @Override
+            public void onError(@Error int error) {
+                if (mListener != null) {
+                    mListener.onError(error);
+                }
+            }
+        });
     }
 
     public void registerListener(@NonNull ProducersListener listener) {
         mListener = listener;
+        if (!mProducersList.isEmpty()) {
+            mListener.onProducersLoaded(mProducersList);
+        }
     }
 
     public void unregisterListener() {

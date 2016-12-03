@@ -16,7 +16,7 @@ public class ProducersListPresenter {
     @Inject
     public ProducersListPresenter(@NonNull ProducersProvider provider) {
         mProvider = provider;
-
+        mProvider.loadProducers();
     }
 
     public void registerListener(@NonNull ProducersListener listener) {
