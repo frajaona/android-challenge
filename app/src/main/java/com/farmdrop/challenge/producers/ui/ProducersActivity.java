@@ -16,18 +16,24 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class ProducersListActivity extends AppCompatActivity {
+public class ProducersActivity extends AppCompatActivity {
 
     private static final String TAG = "ProducersListActivity";
 
     @Inject
     ProducersListPresenter mPresenter;
 
+    private ProducersListFragment mProducersListFragment;
+
+    private ProducerDetailsFragment mProducerDetailsFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_producers_list);
         ((ProducersApplication)getApplication()).getComponent().inject(this);
+        setContentView(R.layout.activity_producers);
+        mProducersListFragment = (ProducersListFragment) getSupportFragmentManager().findFragmentById(R.id.activity_producers_fragment_list);
+        mProducerDetailsFragment = (ProducerDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.activity_producers_fragment_details);
     }
 
     @Override

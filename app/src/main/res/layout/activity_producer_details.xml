@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<fragment
+    android:id="@+id/activity_producer_details_fragment"
+    class="com.farmdrop.challenge.producers.ui.ProducerDetailsFragment"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+>
+
+</fragment>
