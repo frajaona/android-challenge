@@ -1,9 +1,14 @@
 package com.farmdrop.challenge.producers.model;
 
+import org.parceler.Parcel;
 
+@Parcel
 public class Image {
-    private String mPath;
-    private int mPosition;
+    String mPath;
+    int mPosition;
+
+    public Image() {
+    }
 
     public Image(String path, int position) {
         mPath = path;
