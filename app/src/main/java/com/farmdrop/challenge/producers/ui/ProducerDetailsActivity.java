@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.farmdrop.challenge.producers.R;
 import com.farmdrop.challenge.producers.model.Producer;
@@ -21,8 +20,6 @@ public class ProducerDetailsActivity extends AppCompatActivity {
 
     private ProducerDetailsFragment mProducerDetailsFragment;
 
-    private Producer mProducer;
-
     public static Intent getStartingIntent(@NonNull Context context, @NonNull Producer producer) {
         Intent intent = new Intent(context, ProducerDetailsActivity.class);
         intent.putExtra(KEY_PRODUCER, Parcels.wrap(producer));
@@ -33,9 +30,9 @@ public class ProducerDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_producer_details);
         mProducerDetailsFragment = (ProducerDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.activity_producer_details_fragment);
+        Producer producer = Parcels.unwrap(getIntent().getParcelableExtra(KEY_PRODUCER));
 
-        mProducer = Parcels.unwrap(getIntent().getParcelableExtra(KEY_PRODUCER));
-
-        Log.d(TAG, "ProducerDetails: " + mProducer.getName());
+        getSupportActionBar().setTitle(producer.getName());
+        mProducerDetailsFragment.displayProducer(producer);
     }
 }
