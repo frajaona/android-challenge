@@ -57,10 +57,17 @@ public class ProducersNetProvider {
                 if (response.isSuccessful()) {
                     ProducersPage page = response.body();
                     List<Producer> producers = page.getResponse();
+                    Pagination pagination = page.getPagination();
                     if (producers != null && !producers.isEmpty()) {
-                        mNextPage = page.getPagination().getNext();
+                        listener.onNewProducersLoaded(producers);
+                        if (pagination.getCurrent() < pagination.getPages()) {
+                            mNextPage = pagination.getNext();
+                        } else {
+                            listener.onError(ProducersProvider.ERROR_ALL_LOADED);
+                        }
+                    } else {
+                        listener.onError(ProducersProvider.ERROR_ALL_LOADED);
                     }
-                    listener.onNewProducersLoaded(producers);
                 } else {
                     listener.onError(ProducersProvider.ERROR_UNKNOWN);
                 }

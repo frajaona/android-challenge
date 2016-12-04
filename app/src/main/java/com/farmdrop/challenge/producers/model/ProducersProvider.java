@@ -14,13 +14,14 @@ import javax.inject.Inject;
 
 public class ProducersProvider {
 
-    @IntDef({ERROR_UNKNOWN, ERROR_NETWORK})
+    @IntDef({ERROR_UNKNOWN, ERROR_NETWORK, ERROR_ALL_LOADED})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Error {
     }
 
     public static final int ERROR_UNKNOWN = -1;
     public static final int ERROR_NETWORK = 0;
+    public static final int ERROR_ALL_LOADED = 1;
 
 
     @NonNull

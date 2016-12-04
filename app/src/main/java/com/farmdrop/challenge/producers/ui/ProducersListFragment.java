@@ -44,6 +44,8 @@ public class ProducersListFragment extends Fragment {
 
     private boolean mLoadingNext;
 
+    private boolean mAllProducersLoaded;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -76,6 +78,10 @@ public class ProducersListFragment extends Fragment {
     public void displayError(@ProducersProvider.Error int error) {
         @StringRes int errorMessage = 0;
         switch (error) {
+            case ProducersProvider.ERROR_ALL_LOADED:
+                mAllProducersLoaded = true;
+                mAdapter.setAllProducersLoaded(mAllProducersLoaded);
+                break;
             case ProducersProvider.ERROR_NETWORK:
                 errorMessage = R.string.error_network;
                 break;
@@ -84,10 +90,12 @@ public class ProducersListFragment extends Fragment {
                 errorMessage = R.string.error_unknown;
                 break;
         }
-        mProgressBar.setVisibility(View.GONE);
-        mRecyclerView.setVisibility(View.GONE);
-        mErrorTextView.setVisibility(View.VISIBLE);
-        mErrorTextView.setText(errorMessage);
+        if (errorMessage != 0) {
+            mProgressBar.setVisibility(View.GONE);
+            mRecyclerView.setVisibility(View.GONE);
+            mErrorTextView.setVisibility(View.VISIBLE);
+            mErrorTextView.setText(errorMessage);
+        }
     }
 
     private void initRecyclerView(@NonNull Context context) {
@@ -108,17 +116,19 @@ public class ProducersListFragment extends Fragment {
     }
 
     private class OnRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
-        private static final int ITEMS_LEFT_BEFORE_LOADING_NEXT = 2;
+        private static final int ITEMS_LEFT_BEFORE_LOADING_NEXT = 3;
 
         @Override
         public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
 
+            // number of views currently display on screen
             int childCount = mLayoutManager.getChildCount();
+            // total number of views in layout
             int itemCount = mLayoutManager.getItemCount();
             int firstVisibleItemPosition = mLayoutManager.findFirstVisibleItemPosition();
 
-            if (firstVisibleItemPosition + childCount > itemCount - ITEMS_LEFT_BEFORE_LOADING_NEXT && !mLoadingNext) {
+            if (firstVisibleItemPosition + childCount >= itemCount - ITEMS_LEFT_BEFORE_LOADING_NEXT && !mLoadingNext && !mAllProducersLoaded) {
                 mLoadingNext = true;
                 mOnProducersListActionListener.onLoadNextNeeded();
             }
