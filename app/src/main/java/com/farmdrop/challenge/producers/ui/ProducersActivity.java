@@ -28,7 +28,7 @@ public class ProducersActivity extends AppCompatActivity {
     private ProducerDetailsFragment mProducerDetailsFragment;
 
     @NonNull
-    private final OnProducerClickListener mOnProducerClickListener = new OnProducerClickListener() {
+    private final OnProducersListActionListener mOnProducersListActionListener = new OnProducersListActionListener() {
         @Override
         public void onProducerClick(@NonNull Producer producer) {
             if (mProducerDetailsFragment != null) {
@@ -37,6 +37,11 @@ public class ProducersActivity extends AppCompatActivity {
                 Intent intent = ProducerDetailsActivity.getStartingIntent(ProducersActivity.this, producer);
                 startActivity(intent);
             }
+        }
+
+        @Override
+        public void onLoadNextNeeded() {
+            mPresenter.loadNextProducers();
         }
     };
 
@@ -63,7 +68,7 @@ public class ProducersActivity extends AppCompatActivity {
 
     private class ProducersListenerImpl implements ProducersListener {
         @Override
-        public void onProducersLoaded(@NonNull List<Producer> producers) {
+        public void onNewProducersLoaded(@NonNull List<Producer> producers) {
             mProducersListFragment.displayProducers(producers);
         }
 
@@ -74,7 +79,7 @@ public class ProducersActivity extends AppCompatActivity {
     }
 
     @NonNull
-    public OnProducerClickListener getOnProducerClickListener() {
-        return mOnProducerClickListener;
+    public OnProducersListActionListener getOnProducersListActionListener() {
+        return mOnProducersListActionListener;
     }
 }

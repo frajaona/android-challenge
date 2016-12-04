@@ -14,13 +14,14 @@ import javax.inject.Inject;
 
 public class ProducersProvider {
 
-    @IntDef({ERROR_UNKNOWN, ERROR_NETWORK})
+    @IntDef({ERROR_UNKNOWN, ERROR_NETWORK, ERROR_ALL_LOADED})
     @Retention(RetentionPolicy.SOURCE)
     public @interface Error {
     }
 
     public static final int ERROR_UNKNOWN = -1;
     public static final int ERROR_NETWORK = 0;
+    public static final int ERROR_ALL_LOADED = 1;
 
 
     @NonNull
@@ -32,6 +33,23 @@ public class ProducersProvider {
     @NonNull
     private final List<Producer> mProducersList;
 
+    @NonNull
+    private final ProducersListener mProducersListener = new ProducersListener() {
+        @Override
+        public void onNewProducersLoaded(@NonNull List<Producer> producers) {
+            mProducersList.addAll(producers);
+            if (mListener != null) {
+                mListener.onNewProducersLoaded(mProducersList);
+            }
+        }
+
+        @Override
+        public void onError(@Error int error) {
+            if (mListener != null) {
+                mListener.onError(error);
+            }
+        }
+    };
 
     @Inject
     public ProducersProvider(@NonNull ProducersNetProvider netProvider) {
@@ -40,28 +58,17 @@ public class ProducersProvider {
     }
 
     public void loadProducers() {
-        mNetProvider.loadProducers(new ProducersListener() {
-            @Override
-            public void onProducersLoaded(@NonNull List<Producer> producers) {
-                mProducersList.addAll(producers);
-                if (mListener != null) {
-                    mListener.onProducersLoaded(producers);
-                }
-            }
+        mNetProvider.loadProducers(mProducersListener);
+    }
 
-            @Override
-            public void onError(@Error int error) {
-                if (mListener != null) {
-                    mListener.onError(error);
-                }
-            }
-        });
+    public void loadNextProducers() {
+        mNetProvider.loadNextProducers(mProducersListener);
     }
 
     public void registerListener(@NonNull ProducersListener listener) {
         mListener = listener;
         if (!mProducersList.isEmpty()) {
-            mListener.onProducersLoaded(mProducersList);
+            mListener.onNewProducersLoaded(mProducersList);
         }
     }
 

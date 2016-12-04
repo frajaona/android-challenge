@@ -20,9 +20,69 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class ProducersRecyclerViewAdapter extends RecyclerView.Adapter<ProducersRecyclerViewAdapter.ProducerViewHolder> {
+public class ProducersRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    public static class ProducerViewHolder extends RecyclerView.ViewHolder {
+    private static final int TYPE_PRODUCER = 0;
+    private static final int TYPE_LOADING = 1;
+
+    @Nullable
+    private List<Producer> mProducersList;
+
+    @NonNull
+    private final LayoutInflater mLayoutInflater;
+
+    @NonNull
+    private final OnProducersListActionListener mOnProducersListActionListener;
+
+    private boolean mAllProducersLoaded;
+
+    public ProducersRecyclerViewAdapter(@NonNull Context context, @NonNull OnProducersListActionListener onProducersListActionListener) {
+        mLayoutInflater = LayoutInflater.from(context);
+        mOnProducersListActionListener = onProducersListActionListener;
+    }
+
+    @Override
+    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        if (viewType == TYPE_PRODUCER) {
+            View view = mLayoutInflater.inflate(R.layout.producers_recycler_view_item, parent, false);
+            return new ProducerViewHolder(view, mOnProducersListActionListener);
+        } else {
+            View view = mLayoutInflater.inflate(R.layout.producers_recycler_view_loading_item, parent, false);
+            return new ContentLoadingViewHolder(view);
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
+        if (holder instanceof ProducerViewHolder) {
+            Producer producer = mProducersList.get(position);
+            ((ProducerViewHolder)holder).displayProducer(producer);
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        if (mProducersList != null) {
+            return mAllProducersLoaded ? mProducersList.size() : mProducersList.size() + 1;
+        } else {
+            return 0;
+        }
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position == mProducersList.size() ? TYPE_LOADING : TYPE_PRODUCER;
+    }
+
+    public void setProducersList(@NonNull List<Producer> producersList) {
+        mProducersList = producersList;
+    }
+
+    public void setAllProducersLoaded(boolean allProducersLoaded) {
+        mAllProducersLoaded = allProducersLoaded;
+    }
+
+    static class ProducerViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.producers_recycler_view_item_textview_name)
         TextView mNameTextView;
@@ -34,11 +94,11 @@ public class ProducersRecyclerViewAdapter extends RecyclerView.Adapter<Producers
         private Producer mProducer;
 
         @NonNull
-        private final OnProducerClickListener mProducerClickListener;
+        private final OnProducersListActionListener mProducersListActionListener;
 
-        public ProducerViewHolder(View itemView, OnProducerClickListener producerClickListener) {
+        public ProducerViewHolder(View itemView, @NonNull OnProducersListActionListener producersListActionListener) {
             super(itemView);
-            mProducerClickListener = producerClickListener;
+            mProducersListActionListener = producersListActionListener;
             ButterKnife.bind(this, itemView);
         }
 
@@ -55,42 +115,13 @@ public class ProducersRecyclerViewAdapter extends RecyclerView.Adapter<Producers
 
         @OnClick(R.id.producers_recycler_view_item_layout_root)
         public void onClick() {
-            mProducerClickListener.onProducerClick(mProducer);
+            mProducersListActionListener.onProducerClick(mProducer);
         }
     }
 
-    @Nullable
-    private List<Producer> mProducersList;
-
-    @NonNull
-    private final LayoutInflater mLayoutInflater;
-
-    @NonNull
-    private final OnProducerClickListener mOnProducerClickListener;
-
-    public ProducersRecyclerViewAdapter(@NonNull Context context, @NonNull OnProducerClickListener onProducerClickListener) {
-        mLayoutInflater = LayoutInflater.from(context);
-        mOnProducerClickListener = onProducerClickListener;
-    }
-
-    @Override
-    public ProducerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = mLayoutInflater.inflate(R.layout.producers_recycler_view_item, parent, false);
-        return new ProducerViewHolder(view, mOnProducerClickListener);
-    }
-
-    @Override
-    public void onBindViewHolder(ProducerViewHolder holder, int position) {
-        Producer producer = mProducersList.get(position);
-        holder.displayProducer(producer);
-    }
-
-    @Override
-    public int getItemCount() {
-        return mProducersList != null ? mProducersList.size() : 0;
-    }
-
-    public void setProducersList(@NonNull List<Producer> producersList) {
-        mProducersList = producersList;
+    static class ContentLoadingViewHolder  extends RecyclerView.ViewHolder {
+        public ContentLoadingViewHolder(View itemView) {
+            super(itemView);
+        }
     }
 }
