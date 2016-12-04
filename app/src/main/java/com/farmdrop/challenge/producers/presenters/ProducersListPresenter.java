@@ -26,4 +26,8 @@ public class ProducersListPresenter {
     public void unregisterListener() {
         mProvider.unregisterListener();
     }
+
+    public void loadNextProducers() {
+        mProvider.loadNextProducers();
+    }
 }

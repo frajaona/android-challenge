@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.farmdrop.challenge.producers.model.Producer;
 
-public interface OnProducerClickListener {
+public interface OnProducersListActionListener {
     void onProducerClick(@NonNull Producer producer);
+    void onLoadNextNeeded();
 }

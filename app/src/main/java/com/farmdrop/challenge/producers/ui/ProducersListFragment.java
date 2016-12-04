@@ -37,14 +37,18 @@ public class ProducersListFragment extends Fragment {
 
     private ProducersRecyclerViewAdapter mAdapter;
 
+    private LinearLayoutManager mLayoutManager;
+
     @Nullable
-    private OnProducerClickListener mOnProducerClickListener;
+    private OnProducersListActionListener mOnProducersListActionListener;
+
+    private boolean mLoadingNext;
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof ProducersActivity) {
-            mOnProducerClickListener = ((ProducersActivity)context).getOnProducerClickListener();
+            mOnProducersListActionListener = ((ProducersActivity) context).getOnProducersListActionListener();
         }
     }
 
@@ -58,6 +62,8 @@ public class ProducersListFragment extends Fragment {
 
     @UiThread
     public void displayProducers(@NonNull List<Producer> producersList) {
+        mLoadingNext = false;
+
         mProgressBar.setVisibility(View.GONE);
         mRecyclerView.setVisibility(View.VISIBLE);
         mErrorTextView.setVisibility(View.GONE);
@@ -87,16 +93,35 @@ public class ProducersListFragment extends Fragment {
     private void initRecyclerView(@NonNull Context context) {
         mRecyclerView.setHasFixedSize(true);
 
-        LinearLayoutManager layoutManager = new LinearLayoutManager(context);
-        mRecyclerView.setLayoutManager(layoutManager);
+        mLayoutManager = new LinearLayoutManager(context);
+        mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(new SimpleDividerItemDecoration(context.getResources(), R.drawable.producers_recycler_view_line_divider));
+        mRecyclerView.addOnScrollListener(new OnRecyclerViewScrollListener());
 
-        mAdapter = new ProducersRecyclerViewAdapter(context, mOnProducerClickListener);
+        mAdapter = new ProducersRecyclerViewAdapter(context, mOnProducersListActionListener);
         mRecyclerView.setAdapter(mAdapter);
     }
 
     private void initProgressBar() {
         mProgressBar.setVisibility(View.VISIBLE);
         mRecyclerView.setVisibility(View.GONE);
+    }
+
+    private class OnRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
+        private static final int ITEMS_LEFT_BEFORE_LOADING_NEXT = 2;
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+
+            int childCount = mLayoutManager.getChildCount();
+            int itemCount = mLayoutManager.getItemCount();
+            int firstVisibleItemPosition = mLayoutManager.findFirstVisibleItemPosition();
+
+            if (firstVisibleItemPosition + childCount > itemCount - ITEMS_LEFT_BEFORE_LOADING_NEXT && !mLoadingNext) {
+                mLoadingNext = true;
+                mOnProducersListActionListener.onLoadNextNeeded();
+            }
+        }
     }
 }

@@ -60,7 +60,7 @@ public class ProducersNetProvider {
                     if (producers != null && !producers.isEmpty()) {
                         mNextPage = page.getPagination().getNext();
                     }
-                    listener.onProducersLoaded(producers);
+                    listener.onNewProducersLoaded(producers);
                 } else {
                     listener.onError(ProducersProvider.ERROR_UNKNOWN);
                 }

@@ -34,11 +34,11 @@ public class ProducersRecyclerViewAdapter extends RecyclerView.Adapter<Producers
         private Producer mProducer;
 
         @NonNull
-        private final OnProducerClickListener mProducerClickListener;
+        private final OnProducersListActionListener mProducersListActionListener;
 
-        public ProducerViewHolder(View itemView, OnProducerClickListener producerClickListener) {
+        public ProducerViewHolder(View itemView, OnProducersListActionListener producersListActionListener) {
             super(itemView);
-            mProducerClickListener = producerClickListener;
+            mProducersListActionListener = producersListActionListener;
             ButterKnife.bind(this, itemView);
         }
 
@@ -55,7 +55,7 @@ public class ProducersRecyclerViewAdapter extends RecyclerView.Adapter<Producers
 
         @OnClick(R.id.producers_recycler_view_item_layout_root)
         public void onClick() {
-            mProducerClickListener.onProducerClick(mProducer);
+            mProducersListActionListener.onProducerClick(mProducer);
         }
     }
 
@@ -66,17 +66,17 @@ public class ProducersRecyclerViewAdapter extends RecyclerView.Adapter<Producers
     private final LayoutInflater mLayoutInflater;
 
     @NonNull
-    private final OnProducerClickListener mOnProducerClickListener;
+    private final OnProducersListActionListener mOnProducersListActionListener;
 
-    public ProducersRecyclerViewAdapter(@NonNull Context context, @NonNull OnProducerClickListener onProducerClickListener) {
+    public ProducersRecyclerViewAdapter(@NonNull Context context, @NonNull OnProducersListActionListener onProducersListActionListener) {
         mLayoutInflater = LayoutInflater.from(context);
-        mOnProducerClickListener = onProducerClickListener;
+        mOnProducersListActionListener = onProducersListActionListener;
     }
 
     @Override
     public ProducerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = mLayoutInflater.inflate(R.layout.producers_recycler_view_item, parent, false);
-        return new ProducerViewHolder(view, mOnProducerClickListener);
+        return new ProducerViewHolder(view, mOnProducersListActionListener);
     }
 
     @Override
