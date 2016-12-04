@@ -1,12 +1,19 @@
 package com.farmdrop.challenge.producers.model;
 
 
+import android.support.annotation.NonNull;
+
+import com.orm.dsl.Table;
+
 import org.parceler.Parcel;
 
 import java.util.Date;
 import java.util.List;
 
+import static android.R.attr.id;
+
 @Parcel
+@Table
 public class Producer {
     int mId;
     String mName;
@@ -25,6 +32,10 @@ public class Producer {
 
     public Producer(int id, String name, String permalink, Date createdAt, Date updatedAt, List<Image> images, String shortDescription, String description, String location, boolean viaWholesaler, String wholesalerName) {
         mId = id;
+        set(name, permalink, createdAt, updatedAt, images, shortDescription, description, location, viaWholesaler, wholesalerName);
+    }
+
+    public void set(String name, String permalink, Date createdAt, Date updatedAt, List<Image> images, String shortDescription, String description, String location, boolean viaWholesaler, String wholesalerName) {
         mName = name;
         mPermalink = permalink;
         mCreatedAt = createdAt;
@@ -123,5 +134,9 @@ public class Producer {
 
     public void setWholesalerName(String wholesalerName) {
         mWholesalerName = wholesalerName;
+    }
+
+    public void update(@NonNull Producer producer) {
+        set(producer.mName, producer.mPermalink, producer.mCreatedAt, producer.mUpdatedAt, producer.mImages, producer.mShortDescription, producer.mDescription, producer.mLocation, producer.mViaWholesaler, producer.mWholesalerName);
     }
 }

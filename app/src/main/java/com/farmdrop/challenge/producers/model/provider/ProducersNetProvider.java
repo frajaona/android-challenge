@@ -1,7 +1,12 @@
-package com.farmdrop.challenge.producers.model;
+package com.farmdrop.challenge.producers.model.provider;
 
 
 import android.support.annotation.NonNull;
+
+import com.farmdrop.challenge.producers.model.Pagination;
+import com.farmdrop.challenge.producers.model.Producer;
+import com.farmdrop.challenge.producers.model.ProducersListener;
+import com.farmdrop.challenge.producers.model.ProducersPage;
 
 import java.util.List;
 
@@ -14,7 +19,7 @@ import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public class ProducersNetProvider {
+public class ProducersNetProvider implements ProducersProviderInterface {
 
     private static final int PAGE_UNKNOWN_INDEX = -1;
     private static final int PAGE_FIRST_INDEX = 1;

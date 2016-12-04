@@ -9,7 +9,7 @@ import com.farmdrop.challenge.producers.ProducersApplication;
 import com.farmdrop.challenge.producers.R;
 import com.farmdrop.challenge.producers.model.Producer;
 import com.farmdrop.challenge.producers.model.ProducersListener;
-import com.farmdrop.challenge.producers.model.ProducersProvider;
+import com.farmdrop.challenge.producers.model.provider.ProducersProvider;
 import com.farmdrop.challenge.producers.presenters.ProducersListPresenter;
 
 import java.util.List;

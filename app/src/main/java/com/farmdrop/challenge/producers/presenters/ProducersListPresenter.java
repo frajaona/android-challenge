@@ -4,7 +4,7 @@ package com.farmdrop.challenge.producers.presenters;
 import android.support.annotation.NonNull;
 
 import com.farmdrop.challenge.producers.model.ProducersListener;
-import com.farmdrop.challenge.producers.model.ProducersProvider;
+import com.farmdrop.challenge.producers.model.provider.ProducersProvider;
 
 import javax.inject.Inject;
 

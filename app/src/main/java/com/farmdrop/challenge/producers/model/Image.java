@@ -1,8 +1,11 @@
 package com.farmdrop.challenge.producers.model;
 
+import com.orm.dsl.Table;
+
 import org.parceler.Parcel;
 
 @Parcel
+@Table
 public class Image {
     String mPath;
     int mPosition;
