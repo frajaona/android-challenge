@@ -1,18 +1,33 @@
 package com.farmdrop.challenge.producers.model;
 
+import org.parceler.Parcel;
 
+@Parcel
 public class Image {
-    private String mRemoteUrl;
+    String mPath;
+    int mPosition;
 
-    public Image(String remoteUrl) {
-        mRemoteUrl = remoteUrl;
+    public Image() {
     }
 
-    public String getRemoteUrl() {
-        return mRemoteUrl;
+    public Image(String path, int position) {
+        mPath = path;
+        mPosition = position;
     }
 
-    public void setRemoteUrl(String remoteUrl) {
-        mRemoteUrl = remoteUrl;
+    public String getPath() {
+        return mPath;
+    }
+
+    public void setPath(String path) {
+        mPath = path;
+    }
+
+    public int getPosition() {
+        return mPosition;
+    }
+
+    public void setPosition(int position) {
+        mPosition = position;
     }
 }

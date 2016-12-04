@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="producers_recycler_view_short_description_nb_lines">3</integer>
+</resources>
