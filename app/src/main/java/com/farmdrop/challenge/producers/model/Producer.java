@@ -1,21 +1,27 @@
 package com.farmdrop.challenge.producers.model;
 
 
+import org.parceler.Parcel;
+
 import java.util.Date;
 import java.util.List;
 
+@Parcel
 public class Producer {
-    private int mId;
-    private String mName;
-    private String mPermalink;
-    private Date mCreatedAt;
-    private Date mUpdatedAt;
-    private List<Image> mImages;
-    private String mShortDescription;
-    private String mDescription;
-    private String mLocation;
-    private boolean mViaWholesaler;
-    private String mWholesalerName;
+    int mId;
+    String mName;
+    String mPermalink;
+    Date mCreatedAt;
+    Date mUpdatedAt;
+    List<Image> mImages;
+    String mShortDescription;
+    String mDescription;
+    String mLocation;
+    boolean mViaWholesaler;
+    String mWholesalerName;
+
+    public Producer() {
+    }
 
     public Producer(int id, String name, String permalink, Date createdAt, Date updatedAt, List<Image> images, String shortDescription, String description, String location, boolean viaWholesaler, String wholesalerName) {
         mId = id;

@@ -1,9 +1,9 @@
 package com.farmdrop.challenge.producers.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
 import com.farmdrop.challenge.producers.ProducersApplication;
 import com.farmdrop.challenge.producers.R;
@@ -16,18 +16,37 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class ProducersListActivity extends AppCompatActivity {
+public class ProducersActivity extends AppCompatActivity {
 
     private static final String TAG = "ProducersListActivity";
 
     @Inject
     ProducersListPresenter mPresenter;
 
+    private ProducersListFragment mProducersListFragment;
+
+    private ProducerDetailsFragment mProducerDetailsFragment;
+
+    @NonNull
+    private final OnProducerClickListener mOnProducerClickListener = new OnProducerClickListener() {
+        @Override
+        public void onProducerClick(@NonNull Producer producer) {
+            if (mProducerDetailsFragment != null) {
+                mProducerDetailsFragment.displayProducer(producer);
+            } else {
+                Intent intent = ProducerDetailsActivity.getStartingIntent(ProducersActivity.this, producer);
+                startActivity(intent);
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_producers_list);
         ((ProducersApplication)getApplication()).getComponent().inject(this);
+        setContentView(R.layout.activity_producers);
+        mProducersListFragment = (ProducersListFragment) getSupportFragmentManager().findFragmentById(R.id.activity_producers_fragment_list);
+        mProducerDetailsFragment = (ProducerDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.activity_producers_fragment_details);
     }
 
     @Override
@@ -43,17 +62,19 @@ public class ProducersListActivity extends AppCompatActivity {
     }
 
     private class ProducersListenerImpl implements ProducersListener {
-
         @Override
         public void onProducersLoaded(@NonNull List<Producer> producers) {
-            for (Producer producer : producers) {
-                Log.d(TAG, "Producer: " + producer.getName());
-            }
+            mProducersListFragment.displayProducers(producers);
         }
 
         @Override
         public void onError(@ProducersProvider.Error int error) {
-
+            mProducersListFragment.displayError(error);
         }
+    }
+
+    @NonNull
+    public OnProducerClickListener getOnProducerClickListener() {
+        return mOnProducerClickListener;
     }
 }
