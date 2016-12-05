@@ -14,6 +14,13 @@
         android:layout_width="@dimen/producers_list_width"
         android:layout_height="match_parent"/>
 
+    <View
+        android:layout_width="@dimen/separator_line_thickness"
+        android:layout_height="match_parent"
+        android:background="@color/activity_producers_vertical_divider_color"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+
     <fragment
         android:id="@+id/activity_producers_fragment_details"
         class="com.farmdrop.challenge.producers.ui.ProducerDetailsFragment"

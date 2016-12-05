@@ -7,4 +7,6 @@
     <color name="ripple_color">#44000000</color>
     <color name="ripple_color_item">#FFEEEEEE</color>
 
+    <color name="activity_producers_vertical_divider_color">#8A8A8A</color>
+
 </resources>
