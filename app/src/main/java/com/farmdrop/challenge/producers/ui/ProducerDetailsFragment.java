@@ -10,9 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.GlideDrawable;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 import com.farmdrop.challenge.producers.R;
 import com.farmdrop.challenge.producers.model.Image;
 import com.farmdrop.challenge.producers.model.Producer;
@@ -24,14 +28,14 @@ import butterknife.ButterKnife;
 
 public class ProducerDetailsFragment extends Fragment {
 
-    private static final String TAG = "ProducerDetailsFragment";
-
     @BindView(R.id.fragment_producer_details_image)
     ImageView mImageView;
 
+    @BindView(R.id.fragment_producer_details_image_progress_bar)
+    ProgressBar mImageProgressBar;
+
     @BindView(R.id.fragment_producer_details_textview_description)
     TextView mDescriptionTextView;
-
 
     @BindView(R.id.fragment_producer_details_textview_location)
     TextView mLocationTextView;
@@ -48,7 +52,7 @@ public class ProducerDetailsFragment extends Fragment {
         if (images == null || images.isEmpty()) {
             mImageView.setVisibility(View.GONE);
         } else {
-            Glide.with(this).load(images.get(0).getPath()).into(mImageView);
+            Glide.with(this).load(images.get(0).getPath()).listener(new ImageLoadingListener(mImageProgressBar)).into(mImageView);
         }
 
         String location = producer.getLocation();
@@ -66,6 +70,28 @@ public class ProducerDetailsFragment extends Fragment {
             mDescriptionTextView.setText(description);
         } else {
             mDescriptionTextView.setVisibility(View.GONE);
+        }
+    }
+
+    private static class ImageLoadingListener implements RequestListener<String, GlideDrawable> {
+
+        @NonNull
+        private final View mViewToHide;
+
+        public ImageLoadingListener(@NonNull View viewToHide) {
+            mViewToHide = viewToHide;
+        }
+
+        @Override
+        public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
+            mViewToHide.setVisibility(View.GONE);
+            return false;
+        }
+
+        @Override
+        public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
+            mViewToHide.setVisibility(View.GONE);
+            return false;
         }
     }
 }
