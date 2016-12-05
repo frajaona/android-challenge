@@ -6,10 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.farmdrop.challenge.producers.ui.ProducersActivity">
 
     <fragment
@@ -17,6 +13,13 @@
         class="com.farmdrop.challenge.producers.ui.ProducersListFragment"
         android:layout_width="@dimen/producers_list_width"
         android:layout_height="match_parent"/>
+
+    <View
+        android:layout_width="@dimen/separator_line_thickness"
+        android:layout_height="match_parent"
+        android:background="@color/activity_producers_vertical_divider_color"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"/>
 
     <fragment
         android:id="@+id/activity_producers_fragment_details"
