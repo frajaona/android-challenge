@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.farmdrop.challenge.producers.R;
 import com.farmdrop.challenge.producers.model.Producer;
-import com.farmdrop.challenge.producers.model.ProducersProvider;
+import com.farmdrop.challenge.producers.model.provider.ProducersProvider;
 
 import java.util.List;
 

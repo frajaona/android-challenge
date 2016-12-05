@@ -1,9 +1,18 @@
 package com.farmdrop.challenge.producers.model;
 
+import com.farmdrop.challenge.producers.model.provider.Persistable;
+import com.orm.SugarRecord;
+import com.orm.dsl.Table;
+
 import org.parceler.Parcel;
 
 @Parcel
-public class Image {
+@Table
+public class Image implements Persistable {
+    // Producer id info, needed for Producer <-> Image relationship for the ORM.
+    static final String NAMING_PRODUCER_ID = "mProducerId";
+    int mProducerId;
+
     String mPath;
     int mPosition;
 
@@ -29,5 +38,13 @@ public class Image {
 
     public void setPosition(int position) {
         mPosition = position;
+    }
+
+    public void setProducerId(int producerId) {
+        mProducerId = producerId;
+    }
+
+    public void persist() {
+        SugarRecord.save(this);
     }
 }

@@ -30,22 +30,34 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-
-    compile 'com.android.support:appcompat-v7:24.2.1'               // 03/12/2016
-    compile 'com.android.support:recyclerview-v7:24.2.1'            // 03/12/2016
     testCompile 'junit:junit:4.12'
 
+    // App compat libraries
+    compile 'com.android.support:appcompat-v7:24.2.1'               // 03/12/2016
+    compile 'com.android.support:recyclerview-v7:24.2.1'            // 03/12/2016
+
+    // Dagger, dependencies injection
     compile 'com.google.dagger:dagger:2.8'                          // 03/12/2016
     annotationProcessor "com.google.dagger:dagger-compiler:2.8"     // 03/12/2016
 
+    // Retrofit, network
     compile 'com.squareup.retrofit2:retrofit:2.1.0'                 // 03/12/2016
     compile 'com.squareup.retrofit2:converter-gson:2.1.0'           // 03/12/2016
 
+    // Butterknife, views injection
     compile 'com.jakewharton:butterknife:8.4.0'                     // 03/12/2016
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.4.0'// 03/12/2016
 
+    // Parceler, transform object to Parcelable
     compile 'org.parceler:parceler-api:1.1.6'                       // 03/12/2016
     annotationProcessor 'org.parceler:parceler:1.1.6'               // 03/12/2016
 
+    // Glide, image loading
     compile 'com.github.bumptech.glide:glide:3.7.0'                 // 03/12/2016
+
+    // Sugar, simple ORM
+    compile 'com.github.satyan:sugar:1.5'                           // 03/12/2016
+
+    // Guava, Googlecore libraries
+    compile 'com.google.guava:guava:20.0'                           // 03/12/2016
 }

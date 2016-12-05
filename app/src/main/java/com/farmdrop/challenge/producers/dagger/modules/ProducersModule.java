@@ -1,7 +1,8 @@
 package com.farmdrop.challenge.producers.dagger.modules;
 
-import com.farmdrop.challenge.producers.model.ProducersNetProvider;
-import com.farmdrop.challenge.producers.model.ProducersProvider;
+import com.farmdrop.challenge.producers.model.provider.ProducersLocalProvider;
+import com.farmdrop.challenge.producers.model.provider.ProducersNetProvider;
+import com.farmdrop.challenge.producers.model.provider.ProducersProvider;
 import com.farmdrop.challenge.producers.presenters.ProducersListPresenter;
 
 import dagger.Module;
@@ -16,12 +17,17 @@ public class ProducersModule {
     }
 
     @Provides
-    ProducersProvider provideProducersProvider(ProducersNetProvider netProvider) {
-        return new ProducersProvider(netProvider);
+    ProducersProvider provideProducersProvider(ProducersNetProvider netProvider, ProducersLocalProvider localProvider) {
+        return new ProducersProvider(netProvider, localProvider);
     }
 
     @Provides
     ProducersNetProvider provideProducersNetProvider(Retrofit retrofit) {
         return new ProducersNetProvider(retrofit);
+    }
+
+    @Provides
+    ProducersLocalProvider provideProducersLocalProvider() {
+        return new ProducersLocalProvider();
     }
 }

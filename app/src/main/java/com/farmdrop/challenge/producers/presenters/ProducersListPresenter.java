@@ -4,7 +4,7 @@ package com.farmdrop.challenge.producers.presenters;
 import android.support.annotation.NonNull;
 
 import com.farmdrop.challenge.producers.model.ProducersListener;
-import com.farmdrop.challenge.producers.model.ProducersProvider;
+import com.farmdrop.challenge.producers.model.provider.ProducersProvider;
 
 import javax.inject.Inject;
 
@@ -16,7 +16,6 @@ public class ProducersListPresenter {
     @Inject
     public ProducersListPresenter(@NonNull ProducersProvider provider) {
         mProvider = provider;
-        mProvider.loadProducers();
     }
 
     public void registerListener(@NonNull ProducersListener listener) {
@@ -27,7 +26,7 @@ public class ProducersListPresenter {
         mProvider.unregisterListener();
     }
 
-    public void loadNextProducers() {
-        mProvider.loadNextProducers();
+    public void loadProducers() {
+        mProvider.loadProducers();
     }
 }
