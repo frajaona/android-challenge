@@ -8,7 +8,6 @@ import android.util.SparseArray;
 
 import com.farmdrop.challenge.producers.model.Producer;
 import com.farmdrop.challenge.producers.model.ProducersListener;
-import com.orm.SugarRecord;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -51,7 +50,7 @@ public class ProducersProvider {
                 int producerId = producer.getId();
                 Producer localProducer = mProducersSparseArray.get(producerId);
                 if (localProducer == null) {
-                    SugarRecord.save(producer);
+                    producer.persist();
                     mProducersList.add(producer);
                     mProducersSparseArray.append(producerId, producer);
                 } else if (producer.getUpdatedAt().after(localProducer.getUpdatedAt())) {
@@ -75,12 +74,16 @@ public class ProducersProvider {
     private final ProducersListener mLocalProducersListener = new ProducersListener() {
         @Override
         public void onNewProducersLoaded(@NonNull List<Producer> producers) {
-            mProducersList.addAll(producers);
-            for (Producer producer : producers) {
-                mProducersSparseArray.append(producer.getId(), producer);
-            }
-            if (mListener != null) {
-                mListener.onNewProducersLoaded(mProducersList);
+            if (producers.isEmpty()) {
+                loadProducers(true);
+            } else {
+                mProducersList.addAll(producers);
+                for (Producer producer : producers) {
+                    mProducersSparseArray.append(producer.getId(), producer);
+                }
+                if (mListener != null) {
+                    mListener.onNewProducersLoaded(mProducersList);
+                }
             }
         }
 
@@ -96,11 +99,19 @@ public class ProducersProvider {
         mProducersList = new LinkedList<>();
         mProducersSparseArray = new SparseArray<>();
 
-        mLocalProvider.loadProducers(mLocalProducersListener);
+        loadProducers();
     }
 
     public void loadProducers() {
-        mNetProvider.loadProducers(mNetProducersListener, mNetProvider.calcNextPageIndex(mProducersList.size()));
+        loadProducers(false);
+    }
+
+    private void loadProducers(boolean forceNet) {
+        if (forceNet || !mProducersList.isEmpty()) {
+            mNetProvider.loadProducers(mNetProducersListener, mNetProvider.calcNextPageIndex(mProducersList.size()));
+        } else {
+            mLocalProvider.loadProducers(mLocalProducersListener);
+        }
     }
 
     public void registerListener(@NonNull ProducersListener listener) {
