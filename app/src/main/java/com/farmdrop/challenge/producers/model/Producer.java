@@ -3,23 +3,26 @@ package com.farmdrop.challenge.producers.model;
 
 import android.support.annotation.NonNull;
 
+import com.farmdrop.challenge.producers.model.provider.Persistable;
+import com.orm.SugarRecord;
+import com.orm.dsl.Ignore;
 import com.orm.dsl.Table;
+import com.orm.util.NamingHelper;
 
 import org.parceler.Parcel;
 
 import java.util.Date;
 import java.util.List;
 
-import static android.R.attr.id;
-
 @Parcel
 @Table
-public class Producer {
+public class Producer implements Persistable {
     int mId;
     String mName;
     String mPermalink;
     Date mCreatedAt;
     Date mUpdatedAt;
+    @Ignore
     List<Image> mImages;
     String mShortDescription;
     String mDescription;
@@ -89,6 +92,9 @@ public class Producer {
     }
 
     public List<Image> getImages() {
+        if (mImages == null || mImages.isEmpty()) {
+            mImages = SugarRecord.find(Image.class, NamingHelper.toSQLNameDefault(Image.NAMING_PRODUCER_ID) + " = ?", Integer.toString(mId));
+        }
         return mImages;
     }
 
@@ -138,5 +144,13 @@ public class Producer {
 
     public void update(@NonNull Producer producer) {
         set(producer.mName, producer.mPermalink, producer.mCreatedAt, producer.mUpdatedAt, producer.mImages, producer.mShortDescription, producer.mDescription, producer.mLocation, producer.mViaWholesaler, producer.mWholesalerName);
+    }
+
+    public void persist() {
+        SugarRecord.save(this);
+        for (Image image : mImages) {
+            image.setProducerId(mId);
+            image.persist();
+        }
     }
 }
