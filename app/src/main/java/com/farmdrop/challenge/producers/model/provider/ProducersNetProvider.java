@@ -19,10 +19,7 @@ import retrofit2.Retrofit;
 import retrofit2.http.GET;
 import retrofit2.http.Query;
 
-public class ProducersNetProvider implements ProducersProviderInterface {
-
-    private static final int PAGE_UNKNOWN_INDEX = -1;
-    private static final int PAGE_FIRST_INDEX = 1;
+public class ProducersNetProvider {
     private static final int PAGE_DEFAULT_LIMIT = 10;
 
     interface ProducersService {
@@ -37,22 +34,17 @@ public class ProducersNetProvider implements ProducersProviderInterface {
     @NonNull
     private final ProducersService mProducersService;
 
-    private int mNextPage = PAGE_UNKNOWN_INDEX;
-
     public ProducersNetProvider(@NonNull Retrofit retrofit) {
         mRetrofit = retrofit;
         mProducersService = retrofit.create(ProducersService.class);
     }
 
-    public void loadProducers(@NonNull final ProducersListener listener) {
-        loadProducers(listener, PAGE_FIRST_INDEX, PAGE_DEFAULT_LIMIT);
+    public void loadProducers(@NonNull final ProducersListener listener, int page) {
+        loadProducers(listener, page, PAGE_DEFAULT_LIMIT);
     }
 
-    public void loadNextProducers(@NonNull final ProducersListener listener) {
-        if (mNextPage == -1) {
-            mNextPage = PAGE_FIRST_INDEX + 1;
-        }
-        loadProducers(listener, mNextPage, PAGE_DEFAULT_LIMIT);
+    public int calcNextPageIndex(int localNbProducers) {
+        return localNbProducers / PAGE_DEFAULT_LIMIT + 1;
     }
 
     private void loadProducers(@NonNull final ProducersListener listener, int page, int limit) {
@@ -65,9 +57,7 @@ public class ProducersNetProvider implements ProducersProviderInterface {
                     Pagination pagination = page.getPagination();
                     if (producers != null && !producers.isEmpty()) {
                         listener.onNewProducersLoaded(producers);
-                        if (pagination.getCurrent() < pagination.getPages()) {
-                            mNextPage = pagination.getNext();
-                        } else {
+                        if (!(pagination.getCurrent() < pagination.getPages())) {
                             listener.onError(ProducersProvider.ERROR_ALL_LOADED);
                         }
                     } else {

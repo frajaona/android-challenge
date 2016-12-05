@@ -100,11 +100,7 @@ public class ProducersProvider {
     }
 
     public void loadProducers() {
-        mNetProvider.loadProducers(mNetProducersListener);
-    }
-
-    public void loadNextProducers() {
-        mNetProvider.loadNextProducers(mNetProducersListener);
+        mNetProvider.loadProducers(mNetProducersListener, mNetProvider.calcNextPageIndex(mProducersList.size()));
     }
 
     public void registerListener(@NonNull ProducersListener listener) {

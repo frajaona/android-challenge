@@ -41,7 +41,7 @@ public class ProducersActivity extends AppCompatActivity {
 
         @Override
         public void onLoadNextNeeded() {
-            mPresenter.loadNextProducers();
+            mPresenter.loadProducers();
         }
     };
 

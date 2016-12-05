@@ -10,7 +10,7 @@ import com.orm.SugarRecord;
 
 import java.util.Iterator;
 
-public class ProducersLocalProvider implements ProducersProviderInterface {
+public class ProducersLocalProvider {
 
     public void loadProducers(@NonNull ProducersListener listener) {
         Iterator<Producer> iterator = SugarRecord.findAll(Producer.class);
