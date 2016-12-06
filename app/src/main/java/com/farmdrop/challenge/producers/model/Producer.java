@@ -144,13 +144,23 @@ public class Producer implements Persistable {
 
     public void update(@NonNull Producer producer) {
         set(producer.mName, producer.mPermalink, producer.mCreatedAt, producer.mUpdatedAt, producer.mImages, producer.mShortDescription, producer.mDescription, producer.mLocation, producer.mViaWholesaler, producer.mWholesalerName);
+        update();
     }
 
+    @Override
     public void persist() {
         SugarRecord.save(this);
         for (Image image : mImages) {
             image.setProducerId(mId);
             image.persist();
+        }
+    }
+
+    @Override
+    public void update() {
+        SugarRecord.save(this);
+        for (Image image : mImages) {
+            image.update();
         }
     }
 }
