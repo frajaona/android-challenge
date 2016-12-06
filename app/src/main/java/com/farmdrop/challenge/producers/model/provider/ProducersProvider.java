@@ -46,17 +46,7 @@ public class ProducersProvider {
     private final ProducersListener mNetProducersListener = new ProducersListener() {
         @Override
         public void onNewProducersLoaded(@NonNull List<Producer> producers) {
-            for (Producer producer : producers) {
-                int producerId = producer.getId();
-                Producer localProducer = mProducersSparseArray.get(producerId);
-                if (localProducer == null) {
-                    producer.persist();
-                    mProducersList.add(producer);
-                    mProducersSparseArray.append(producerId, producer);
-                } else if (producer.getUpdatedAt().after(localProducer.getUpdatedAt())) {
-                    localProducer.update(producer);
-                }
-            }
+            updateLocalProducersFromNetwork(producers);
             if (mListener != null) {
                 mListener.onNewProducersLoaded(mProducersList);
             }
@@ -81,9 +71,26 @@ public class ProducersProvider {
                 for (Producer producer : producers) {
                     mProducersSparseArray.append(producer.getId(), producer);
                 }
+                // start update local producers from network, TODO: improve
+                mNetProvider.loadProducers(mUpdateLocalProducersListener, 1, producers.size());
                 if (mListener != null) {
                     mListener.onNewProducersLoaded(mProducersList);
                 }
+            }
+        }
+
+        @Override
+        public void onError(@Error int error) {
+        }
+    };
+
+    @NonNull
+    private final ProducersListener mUpdateLocalProducersListener = new ProducersListener() {
+        @Override
+        public void onNewProducersLoaded(@NonNull List<Producer> producers) {
+            updateLocalProducersFromNetwork(producers);
+            if (mListener != null) {
+                mListener.onNewProducersLoaded(mProducersList);
             }
         }
 
@@ -123,5 +130,24 @@ public class ProducersProvider {
 
     public void unregisterListener() {
         mListener = null;
+    }
+
+    /**
+     * Update the producers list stored on the device from online producers. Local producers list is
+     * created if it doesn't exist.
+     * @param onlineProducers Producers list fetched from network.
+     */
+    private void updateLocalProducersFromNetwork(@NonNull List<Producer> onlineProducers) {
+        for (Producer producer : onlineProducers) {
+            int producerId = producer.getId();
+            Producer localProducer = mProducersSparseArray.get(producerId);
+            if (localProducer == null) {
+                producer.persist();
+                mProducersList.add(producer);
+                mProducersSparseArray.append(producerId, producer);
+            } else if (producer.getUpdatedAt().after(localProducer.getUpdatedAt())) {
+                localProducer.update(producer);
+            }
+        }
     }
 }
