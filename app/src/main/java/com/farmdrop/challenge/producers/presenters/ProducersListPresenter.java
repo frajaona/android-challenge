@@ -3,8 +3,11 @@ package com.farmdrop.challenge.producers.presenters;
 
 import android.support.annotation.NonNull;
 
+import com.farmdrop.challenge.producers.model.Producer;
 import com.farmdrop.challenge.producers.model.ProducersListener;
 import com.farmdrop.challenge.producers.model.provider.ProducersProvider;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -28,5 +31,14 @@ public class ProducersListPresenter {
 
     public void loadProducers() {
         mProvider.loadProducers();
+    }
+
+    public List<Producer> searchProducers(@NonNull String query) {
+        return mProvider.searchProducers(query);
+    }
+
+    @NonNull
+    public List<Producer> getProducers() {
+        return mProvider.getProducers();
     }
 }

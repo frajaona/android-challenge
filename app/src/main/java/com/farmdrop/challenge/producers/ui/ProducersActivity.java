@@ -3,7 +3,11 @@ package com.farmdrop.challenge.producers.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuItem;
 
 import com.farmdrop.challenge.producers.ProducersApplication;
 import com.farmdrop.challenge.producers.R;
@@ -17,9 +21,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 public class ProducersActivity extends AppCompatActivity {
-
-    private static final String TAG = "ProducersListActivity";
-
     @Inject
     ProducersListPresenter mPresenter;
 
@@ -64,6 +65,37 @@ public class ProducersActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         mPresenter.unregisterListener();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu( Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_search, menu);
+        MenuItem searchActionMenuItem = menu.findItem( R.id.action_search);
+        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchActionMenuItem);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                List<Producer> producersSearchResult = mPresenter.searchProducers(query);
+                mProducersListFragment.setScrollDownToLoadNextEnable(false);
+                mProducersListFragment.displayProducers(producersSearchResult);
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                List<Producer> localProducers = mPresenter.getProducers();
+                mProducersListFragment.setScrollDownToLoadNextEnable(true);
+                mProducersListFragment.displayProducers(localProducers);
+                return false;
+            }
+        });
+        return true;
     }
 
     private class ProducersListenerImpl implements ProducersListener {

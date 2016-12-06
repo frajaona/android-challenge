@@ -132,6 +132,16 @@ public class ProducersProvider {
         mListener = null;
     }
 
+    @NonNull
+    public List<Producer> searchProducers(@NonNull String query) {
+        return mLocalProvider.searchProducers(query);
+    }
+
+    @NonNull
+    public List<Producer> getProducers() {
+        return mProducersList;
+    }
+
     /**
      * Update the producers list stored on the device from online producers. Local producers list is
      * created if it doesn't exist.

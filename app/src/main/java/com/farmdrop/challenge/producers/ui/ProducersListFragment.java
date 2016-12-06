@@ -46,6 +46,8 @@ public class ProducersListFragment extends Fragment {
 
     private boolean mAllProducersLoaded;
 
+    private boolean mScrollDownToLoadNext;
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -59,6 +61,7 @@ public class ProducersListFragment extends Fragment {
         ButterKnife.bind(this, rootView);
         initRecyclerView(getContext());
         initProgressBar();
+        mScrollDownToLoadNext = true;
         return rootView;
     }
 
@@ -98,6 +101,15 @@ public class ProducersListFragment extends Fragment {
         }
     }
 
+    public void setScrollDownToLoadNextEnable(boolean scrollDownToLoadNext) {
+        mScrollDownToLoadNext = scrollDownToLoadNext;
+        if (!mScrollDownToLoadNext) {
+            mAdapter.setAllProducersLoaded(true);
+        } else {
+            mAdapter.setAllProducersLoaded(mAllProducersLoaded);
+        }
+    }
+
     private void initRecyclerView(@NonNull Context context) {
         mRecyclerView.setHasFixedSize(true);
 
@@ -128,7 +140,7 @@ public class ProducersListFragment extends Fragment {
             int itemCount = mLayoutManager.getItemCount();
             int firstVisibleItemPosition = mLayoutManager.findFirstVisibleItemPosition();
 
-            if (firstVisibleItemPosition + childCount >= itemCount - ITEMS_LEFT_BEFORE_LOADING_NEXT && !mLoadingNext && !mAllProducersLoaded) {
+            if (firstVisibleItemPosition + childCount >= itemCount - ITEMS_LEFT_BEFORE_LOADING_NEXT && !mLoadingNext && !mAllProducersLoaded && mScrollDownToLoadNext) {
                 mLoadingNext = true;
                 mOnProducersListActionListener.onLoadNextNeeded();
             }

@@ -4,4 +4,6 @@
 
     <string name="error_network">Check your internet connection and try again.</string>
     <string name="error_unknown">An unexpected error has happened. Retry later.</string>
+
+    <string name="search">Search</string>
 </resources>
