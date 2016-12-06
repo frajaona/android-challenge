@@ -47,7 +47,7 @@ public class ProducersNetProvider {
         return localNbProducers / PAGE_DEFAULT_LIMIT + 1;
     }
 
-    private void loadProducers(@NonNull final ProducersListener listener, int page, int limit) {
+    public void loadProducers(@NonNull final ProducersListener listener, int page, int limit) {
         mProducersService.getProducersPage(page, limit).enqueue(new Callback<ProducersPage>() {
             @Override
             public void onResponse(Call<ProducersPage> call, Response<ProducersPage> response) {

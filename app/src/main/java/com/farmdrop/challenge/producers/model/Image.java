@@ -44,7 +44,13 @@ public class Image implements Persistable {
         mProducerId = producerId;
     }
 
+    @Override
     public void persist() {
         SugarRecord.save(this);
+    }
+
+    @Override
+    public void update() {
+        SugarRecord.update(this);
     }
 }
