@@ -5,6 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.farmdrop.challenge.producers.model.Producer;
 import com.farmdrop.challenge.producers.model.ProducersListener;
+import com.farmdrop.challenge.producers.model.ProducersSearchListener;
 import com.farmdrop.challenge.producers.model.provider.ProducersProvider;
 
 import java.util.List;
@@ -21,6 +22,10 @@ public class ProducersListPresenter {
         mProvider = provider;
     }
 
+    public void loadProducers() {
+        mProvider.loadProducers();
+    }
+
     public void registerListener(@NonNull ProducersListener listener) {
         mProvider.registerListener(listener);
     }
@@ -29,12 +34,16 @@ public class ProducersListPresenter {
         mProvider.unregisterListener();
     }
 
-    public void loadProducers() {
-        mProvider.loadProducers();
+    public void searchProducers(@NonNull String query) {
+        mProvider.searchProducers(query);
     }
 
-    public List<Producer> searchProducers(@NonNull String query) {
-        return mProvider.searchProducers(query);
+    public void registerSearchListener(@NonNull ProducersSearchListener searchListener) {
+        mProvider.registerSearchListener(searchListener);
+    }
+
+    public void unregisterSearchListener() {
+        mProvider.unregisterSearchListener();
     }
 
     @NonNull

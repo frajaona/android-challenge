@@ -15,6 +15,7 @@ import com.farmdrop.challenge.producers.ProducersApplication;
 import com.farmdrop.challenge.producers.R;
 import com.farmdrop.challenge.producers.model.Producer;
 import com.farmdrop.challenge.producers.model.ProducersListener;
+import com.farmdrop.challenge.producers.model.ProducersSearchListener;
 import com.farmdrop.challenge.producers.model.provider.ProducersProvider;
 import com.farmdrop.challenge.producers.presenters.ProducersListPresenter;
 
@@ -73,6 +74,7 @@ public class ProducersActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         mPresenter.registerListener(new ProducersListenerImpl());
+        mPresenter.registerSearchListener(new ProducersSearchListenerImpl());
         restoreLastSearch();
     }
 
@@ -80,6 +82,7 @@ public class ProducersActivity extends AppCompatActivity {
     public void onPause() {
         super.onPause();
         mPresenter.unregisterListener();
+        mPresenter.unregisterSearchListener();
     }
 
     @Override
@@ -139,9 +142,7 @@ public class ProducersActivity extends AppCompatActivity {
     }
 
     private void searchProducers(@NonNull String query) {
-        List<Producer> producersSearchResult = mPresenter.searchProducers(query);
-        mProducersListFragment.setScrollDownToLoadNextEnable(false);
-        mProducersListFragment.displayProducers(producersSearchResult);
+        mPresenter.searchProducers(query);
     }
 
     private void restoreLastSearch() {
@@ -171,6 +172,15 @@ public class ProducersActivity extends AppCompatActivity {
         @Override
         public void onError(@ProducersProvider.Error int error) {
             mProducersListFragment.displayError(error);
+        }
+    }
+
+    private class ProducersSearchListenerImpl implements ProducersSearchListener {
+
+        @Override
+        public void onProducersFound(@NonNull String query, @NonNull List<Producer> producers) {
+            mProducersListFragment.setScrollDownToLoadNextEnable(false);
+            mProducersListFragment.displayProducers(producers);
         }
     }
 
