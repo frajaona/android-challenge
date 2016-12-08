@@ -6,8 +6,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 
 import com.farmdrop.challenge.producers.model.Producer;
-import com.farmdrop.challenge.producers.model.ProducersListener;
-import com.farmdrop.challenge.producers.model.ProducersSearchListener;
+import com.farmdrop.challenge.producers.model.listener.ProducersListener;
+import com.farmdrop.challenge.producers.model.listener.ProducersSearchListener;
 import com.google.common.collect.Lists;
 import com.orm.SugarRecord;
 import com.orm.util.NamingHelper;

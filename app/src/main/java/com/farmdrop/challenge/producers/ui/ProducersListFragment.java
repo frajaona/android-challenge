@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.farmdrop.challenge.producers.R;
 import com.farmdrop.challenge.producers.model.Producer;
-import com.farmdrop.challenge.producers.model.provider.ProducersProvider;
+import com.farmdrop.challenge.producers.presenters.ProducersListPresenter;
 
 import java.util.List;
 
@@ -78,17 +78,17 @@ public class ProducersListFragment extends Fragment {
     }
 
     @UiThread
-    public void displayError(@ProducersProvider.Error int error) {
+    public void displayError(@ProducersListPresenter.Error int error) {
         @StringRes int errorMessage = 0;
         switch (error) {
-            case ProducersProvider.ERROR_ALL_LOADED:
+            case ProducersListPresenter.ERROR_ALL_LOADED:
                 mAllProducersLoaded = true;
                 mAdapter.setAllProducersLoaded(mAllProducersLoaded);
                 break;
-            case ProducersProvider.ERROR_NETWORK:
+            case ProducersListPresenter.ERROR_NETWORK:
                 errorMessage = R.string.error_network;
                 break;
-            case ProducersProvider.ERROR_UNKNOWN:
+            case ProducersListPresenter.ERROR_UNKNOWN:
             default:
                 errorMessage = R.string.error_unknown;
                 break;

@@ -1,6 +1,8 @@
-package com.farmdrop.challenge.producers.model;
+package com.farmdrop.challenge.producers.model.listener;
 
 import android.support.annotation.NonNull;
+
+import com.farmdrop.challenge.producers.model.Producer;
 
 import java.util.List;
 

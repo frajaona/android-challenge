@@ -14,9 +14,8 @@ import android.view.MenuItem;
 import com.farmdrop.challenge.producers.ProducersApplication;
 import com.farmdrop.challenge.producers.R;
 import com.farmdrop.challenge.producers.model.Producer;
-import com.farmdrop.challenge.producers.model.ProducersListener;
-import com.farmdrop.challenge.producers.model.ProducersSearchListener;
-import com.farmdrop.challenge.producers.model.provider.ProducersProvider;
+import com.farmdrop.challenge.producers.model.listener.ProducersListener;
+import com.farmdrop.challenge.producers.model.listener.ProducersSearchListener;
 import com.farmdrop.challenge.producers.presenters.ProducersListPresenter;
 
 import java.util.List;
@@ -38,6 +37,31 @@ public class ProducersActivity extends AppCompatActivity {
 
     @Nullable
     private String mLastQuery;
+
+    @NonNull
+    private final ProducersListener mProducersListener = new ProducersListener() {
+        @Override
+        public void onNewProducersLoaded(@NonNull List<Producer> producers) {
+            if (!searchviewContainsQuery()) {
+                mProducersListFragment.displayProducers(producers);
+            }
+        }
+
+        @Override
+        public void onError(@ProducersListPresenter.Error int error) {
+            mProducersListFragment.displayError(error);
+        }
+    };
+
+    @NonNull
+    private final ProducersSearchListener mProducersSearchListener = new ProducersSearchListener() {
+
+        @Override
+        public void onProducersFound(@NonNull String query, @NonNull List<Producer> producers) {
+            mProducersListFragment.setScrollDownToLoadNextEnable(false);
+            mProducersListFragment.displayProducers(producers);
+        }
+    };
 
     @NonNull
     private final OnProducersListActionListener mOnProducersListActionListener = new OnProducersListActionListener() {
@@ -73,8 +97,8 @@ public class ProducersActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        mPresenter.registerListener(new ProducersListenerImpl());
-        mPresenter.registerSearchListener(new ProducersSearchListenerImpl());
+        mPresenter.registerListener(mProducersListener);
+        mPresenter.registerSearchListener(mProducersSearchListener);
         restoreLastSearch();
     }
 
@@ -158,29 +182,6 @@ public class ProducersActivity extends AppCompatActivity {
                 mSearchView.setIconified(false);
                 mSearchView.setQuery(query, true);
             }
-        }
-    }
-
-    private class ProducersListenerImpl implements ProducersListener {
-        @Override
-        public void onNewProducersLoaded(@NonNull List<Producer> producers) {
-            if (!searchviewContainsQuery()) {
-                mProducersListFragment.displayProducers(producers);
-            }
-        }
-
-        @Override
-        public void onError(@ProducersProvider.Error int error) {
-            mProducersListFragment.displayError(error);
-        }
-    }
-
-    private class ProducersSearchListenerImpl implements ProducersSearchListener {
-
-        @Override
-        public void onProducersFound(@NonNull String query, @NonNull List<Producer> producers) {
-            mProducersListFragment.setScrollDownToLoadNextEnable(false);
-            mProducersListFragment.displayProducers(producers);
         }
     }
 

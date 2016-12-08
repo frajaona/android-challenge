@@ -5,8 +5,9 @@ import android.support.annotation.NonNull;
 
 import com.farmdrop.challenge.producers.model.Pagination;
 import com.farmdrop.challenge.producers.model.Producer;
-import com.farmdrop.challenge.producers.model.ProducersListener;
+import com.farmdrop.challenge.producers.model.listener.ProducersListener;
 import com.farmdrop.challenge.producers.model.ProducersPage;
+import com.farmdrop.challenge.producers.presenters.ProducersListPresenter;
 
 import java.util.List;
 
@@ -58,19 +59,19 @@ public class ProducersNetProvider {
                     if (producers != null && !producers.isEmpty()) {
                         listener.onNewProducersLoaded(producers);
                         if (!(pagination.getCurrent() < pagination.getPages())) {
-                            listener.onError(ProducersProvider.ERROR_ALL_LOADED);
+                            listener.onError(ProducersListPresenter.ERROR_ALL_LOADED);
                         }
                     } else {
-                        listener.onError(ProducersProvider.ERROR_ALL_LOADED);
+                        listener.onError(ProducersListPresenter.ERROR_ALL_LOADED);
                     }
                 } else {
-                    listener.onError(ProducersProvider.ERROR_UNKNOWN);
+                    listener.onError(ProducersListPresenter.ERROR_UNKNOWN);
                 }
             }
 
             @Override
             public void onFailure(Call<ProducersPage> call, Throwable t) {
-                listener.onError(ProducersProvider.ERROR_NETWORK);
+                listener.onError(ProducersListPresenter.ERROR_NETWORK);
             }
         });
     }
