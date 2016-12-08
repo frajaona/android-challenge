@@ -3,7 +3,6 @@ package com.farmdrop.challenge.producers.model;
 
 import android.support.annotation.NonNull;
 
-import com.farmdrop.challenge.producers.model.provider.Persistable;
 import com.orm.SugarRecord;
 import com.orm.dsl.Ignore;
 import com.orm.dsl.Table;
