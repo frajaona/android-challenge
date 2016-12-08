@@ -86,15 +86,14 @@ public class ProducersActivity extends AppCompatActivity {
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                List<Producer> producersSearchResult = mPresenter.searchProducers(query);
-                mProducersListFragment.setScrollDownToLoadNextEnable(false);
-                mProducersListFragment.displayProducers(producersSearchResult);
+                searchProducers(query);
                 return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                return false;
+                searchProducers(newText);
+                return true;
             }
         });
         mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
@@ -107,6 +106,13 @@ public class ProducersActivity extends AppCompatActivity {
             }
         });
         return true;
+    }
+
+    private void searchProducers(@NonNull String query) {
+        String cleanQuery = query.trim();
+        List<Producer> producersSearchResult = mPresenter.searchProducers(cleanQuery);
+        mProducersListFragment.setScrollDownToLoadNextEnable(false);
+        mProducersListFragment.displayProducers(producersSearchResult);
     }
 
     private class ProducersListenerImpl implements ProducersListener {
