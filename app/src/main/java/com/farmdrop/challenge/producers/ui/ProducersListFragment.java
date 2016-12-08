@@ -83,7 +83,7 @@ public class ProducersListFragment extends Fragment {
         switch (error) {
             case ProducersListPresenter.ERROR_ALL_LOADED:
                 mAllProducersLoaded = true;
-                mAdapter.setAllProducersLoaded(mAllProducersLoaded);
+                mAdapter.setAllProducersLoaded(true);
                 break;
             case ProducersListPresenter.ERROR_NETWORK:
                 errorMessage = R.string.error_network;
@@ -140,7 +140,7 @@ public class ProducersListFragment extends Fragment {
             int itemCount = mLayoutManager.getItemCount();
             int firstVisibleItemPosition = mLayoutManager.findFirstVisibleItemPosition();
 
-            if (firstVisibleItemPosition + childCount >= itemCount - ITEMS_LEFT_BEFORE_LOADING_NEXT && !mLoadingNext && !mAllProducersLoaded && mScrollDownToLoadNext) {
+            if (mOnProducersListActionListener != null && firstVisibleItemPosition + childCount >= itemCount - ITEMS_LEFT_BEFORE_LOADING_NEXT && !mLoadingNext && !mAllProducersLoaded && mScrollDownToLoadNext) {
                 mLoadingNext = true;
                 mOnProducersListActionListener.onLoadNextNeeded();
             }

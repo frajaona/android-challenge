@@ -6,4 +6,6 @@
     <string name="error_unknown">An unexpected error has happened. Retry later.</string>
 
     <string name="search">Search</string>
+
+    <string name="content_description_producer_image">Producer image</string>
 </resources>

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    android:id="@+id/activity_producers_layout_root"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_producers_layout_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.farmdrop.challenge.producers.ui.ProducersActivity">
@@ -11,6 +10,6 @@
         android:id="@+id/activity_producers_fragment_list"
         class="com.farmdrop.challenge.producers.ui.ProducersListFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent" />
 
 </RelativeLayout>

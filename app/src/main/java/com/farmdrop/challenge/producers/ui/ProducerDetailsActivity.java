@@ -16,12 +16,7 @@ import com.farmdrop.challenge.producers.model.Producer;
 import org.parceler.Parcels;
 
 public class ProducerDetailsActivity extends AppCompatActivity {
-
-    private static final String TAG = "ProducerDetailsActivity";
-
     private static final String KEY_PRODUCER = "KEY_PRODUCER";
-
-    private ProducerDetailsFragment mProducerDetailsFragment;
 
     public static Intent getStartingIntent(@NonNull Context context, @NonNull Producer producer) {
         Intent intent = new Intent(context, ProducerDetailsActivity.class);
@@ -32,7 +27,7 @@ public class ProducerDetailsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_producer_details);
-        mProducerDetailsFragment = (ProducerDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.activity_producer_details_fragment);
+        ProducerDetailsFragment producerDetailsFragment = (ProducerDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.activity_producer_details_fragment);
 
         Producer producer = Parcels.unwrap(getIntent().getParcelableExtra(KEY_PRODUCER));
 
@@ -41,7 +36,7 @@ public class ProducerDetailsActivity extends AppCompatActivity {
             actionBar.setTitle(producer.getName());
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
-        mProducerDetailsFragment.displayProducer(producer);
+        producerDetailsFragment.displayProducer(producer);
     }
 
     @Override
