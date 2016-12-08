@@ -28,6 +28,8 @@ public class ProducersActivity extends AppCompatActivity {
 
     private ProducerDetailsFragment mProducerDetailsFragment;
 
+    private SearchView mSearchView;
+
     @NonNull
     private final OnProducersListActionListener mOnProducersListActionListener = new OnProducersListActionListener() {
         @Override
@@ -49,7 +51,7 @@ public class ProducersActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((ProducersApplication)getApplication()).getComponent().inject(this);
+        ((ProducersApplication) getApplication()).getComponent().inject(this);
         setContentView(R.layout.activity_producers);
         mProducersListFragment = (ProducersListFragment) getSupportFragmentManager().findFragmentById(R.id.activity_producers_fragment_list);
         mProducerDetailsFragment = (ProducerDetailsFragment) getSupportFragmentManager().findFragmentById(R.id.activity_producers_fragment_details);
@@ -68,11 +70,20 @@ public class ProducersActivity extends AppCompatActivity {
     }
 
     @Override
-    public boolean onCreateOptionsMenu( Menu menu) {
+    public void onBackPressed() {
+        if (!mSearchView.isIconified()) {
+            mSearchView.setIconified(true);
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_search, menu);
-        MenuItem searchActionMenuItem = menu.findItem( R.id.action_search);
-        final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchActionMenuItem);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        MenuItem searchActionMenuItem = menu.findItem(R.id.action_search);
+        mSearchView = (SearchView) MenuItemCompat.getActionView(searchActionMenuItem);
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 List<Producer> producersSearchResult = mPresenter.searchProducers(query);
@@ -86,7 +97,7 @@ public class ProducersActivity extends AppCompatActivity {
                 return false;
             }
         });
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+        mSearchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
                 List<Producer> localProducers = mPresenter.getProducers();
