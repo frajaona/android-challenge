@@ -1,18 +1,24 @@
 package com.farmdrop.challenge.producers.ui;
 
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.annotation.UiThread;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -26,6 +32,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ProducersListFragment extends Fragment {
+    @BindView(R.id.fragment_producers_list_layout_root)
+    FrameLayout mRootLayout;
+
     @BindView(R.id.fragment_producers_list_recycler_view)
     RecyclerView mRecyclerView;
 
@@ -38,6 +47,8 @@ public class ProducersListFragment extends Fragment {
     private ProducersRecyclerViewAdapter mAdapter;
 
     private LinearLayoutManager mLayoutManager;
+
+    private ConnectivityBroadcastReceiver mNetworkBroadcastReceiver;
 
     @Nullable
     private OnProducersListActionListener mOnProducersListActionListener;
@@ -56,13 +67,32 @@ public class ProducersListFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mNetworkBroadcastReceiver = new ConnectivityBroadcastReceiver();
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_producers_list, container);
         ButterKnife.bind(this, rootView);
         initRecyclerView(getContext());
-        initProgressBar();
+        displayLoading();
         mScrollDownToLoadNext = true;
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        getContext().registerReceiver(mNetworkBroadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getContext().unregisterReceiver(mNetworkBroadcastReceiver);
     }
 
     @UiThread
@@ -79,14 +109,20 @@ public class ProducersListFragment extends Fragment {
 
     @UiThread
     public void displayError(@ProducersListPresenter.Error int error) {
+        int nbProducersDisplayed = mAdapter.getItemCount();
         @StringRes int errorMessage = 0;
         switch (error) {
             case ProducersListPresenter.ERROR_ALL_LOADED:
                 mAllProducersLoaded = true;
                 mAdapter.setAllProducersLoaded(true);
+                mAdapter.notifyDataSetChanged();
                 break;
             case ProducersListPresenter.ERROR_NETWORK:
-                errorMessage = R.string.error_network;
+                if (nbProducersDisplayed == 0) {
+                    errorMessage = R.string.error_network;
+                } else {
+                    errorMessage = R.string.error_network_load_more;
+                }
                 break;
             case ProducersListPresenter.ERROR_UNKNOWN:
             default:
@@ -94,10 +130,19 @@ public class ProducersListFragment extends Fragment {
                 break;
         }
         if (errorMessage != 0) {
-            mProgressBar.setVisibility(View.GONE);
-            mRecyclerView.setVisibility(View.GONE);
-            mErrorTextView.setVisibility(View.VISIBLE);
-            mErrorTextView.setText(errorMessage);
+            // if we haven't displayed any producers, display the error in the centered error textview
+            if (nbProducersDisplayed == 0) {
+                mProgressBar.setVisibility(View.GONE);
+                mRecyclerView.setVisibility(View.GONE);
+                mErrorTextView.setVisibility(View.VISIBLE);
+                mErrorTextView.setText(errorMessage);
+            } else {
+                // simply display a SnackBar otherwise
+                Snackbar.make(mRootLayout, errorMessage, Snackbar.LENGTH_LONG).show();
+
+                // and stop displaying loading ring on last item
+                setScrollDownToLoadNextEnable(false);
+            }
         }
     }
 
@@ -108,6 +153,7 @@ public class ProducersListFragment extends Fragment {
         } else {
             mAdapter.setAllProducersLoaded(mAllProducersLoaded);
         }
+        mAdapter.notifyDataSetChanged();
     }
 
     private void initRecyclerView(@NonNull Context context) {
@@ -122,11 +168,16 @@ public class ProducersListFragment extends Fragment {
         mRecyclerView.setAdapter(mAdapter);
     }
 
-    private void initProgressBar() {
+    private void displayLoading() {
         mProgressBar.setVisibility(View.VISIBLE);
         mRecyclerView.setVisibility(View.GONE);
+        mErrorTextView.setVisibility(View.GONE);
     }
 
+    /**
+     * RecyclerView scroll gesture listener to detect when the user reaches the end of the list, in
+     * order to load more producers.
+     */
     private class OnRecyclerViewScrollListener extends RecyclerView.OnScrollListener {
         private static final int ITEMS_LEFT_BEFORE_LOADING_NEXT = 3;
 
@@ -143,6 +194,28 @@ public class ProducersListFragment extends Fragment {
             if (mOnProducersListActionListener != null && firstVisibleItemPosition + childCount >= itemCount - ITEMS_LEFT_BEFORE_LOADING_NEXT && !mLoadingNext && !mAllProducersLoaded && mScrollDownToLoadNext) {
                 mLoadingNext = true;
                 mOnProducersListActionListener.onLoadNextNeeded();
+            }
+        }
+    }
+
+    /**
+     * Detect Network connectivity changes to
+     */
+    private class ConnectivityBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            boolean noConnectivity = intent.getBooleanExtra(ConnectivityManager.EXTRA_NO_CONNECTIVITY, false);
+            if (!noConnectivity) {
+                // when we're back online, reset flags & try to reload the next producers if needed
+                setScrollDownToLoadNextEnable(true);
+
+                int nbProducersDisplayed = mAdapter.getItemCount();
+                if (mOnProducersListActionListener != null && (mLoadingNext || nbProducersDisplayed == 0)) {
+                    if (nbProducersDisplayed == 0) {
+                        displayLoading();
+                    }
+                    mOnProducersListActionListener.onLoadNextNeeded();
+                }
             }
         }
     }

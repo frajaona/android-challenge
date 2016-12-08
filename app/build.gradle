@@ -35,6 +35,7 @@ dependencies {
     // App compat libraries
     compile 'com.android.support:appcompat-v7:24.2.1'               // 03/12/2016
     compile 'com.android.support:recyclerview-v7:24.2.1'            // 03/12/2016
+    compile 'com.android.support:design:24.2.1'                     // 03/12/2016
 
     // Dagger, dependencies injection
     compile 'com.google.dagger:dagger:2.8'                          // 03/12/2016

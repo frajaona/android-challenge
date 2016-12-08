@@ -2,7 +2,8 @@
     <string name="app_name">Farmdrop producers</string>
     <string name="no_description">No description</string>
 
-    <string name="error_network">Check your internet connection and try again.</string>
+    <string name="error_network">Turn your internet connection ON to load producers.</string>
+    <string name="error_network_load_more">Turn your internet connection ON to load more producers.</string>
     <string name="error_unknown">An unexpected error has happened. Retry later.</string>
 
     <string name="search">Search</string>
