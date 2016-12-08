@@ -42,7 +42,7 @@ public class ProducersActivity extends AppCompatActivity {
     private final ProducersListener mProducersListener = new ProducersListener() {
         @Override
         public void onNewProducersLoaded(@NonNull List<Producer> producers) {
-            if (!searchviewContainsQuery()) {
+            if (!searchViewContainsQuery()) {
                 mProducersListFragment.displayProducers(producers);
             }
         }
@@ -161,7 +161,7 @@ public class ProducersActivity extends AppCompatActivity {
         }
     }
 
-    private boolean searchviewContainsQuery() {
+    private boolean searchViewContainsQuery() {
         return mSearchView != null && !TextUtils.isEmpty(mSearchView.getQuery());
     }
 
@@ -172,7 +172,7 @@ public class ProducersActivity extends AppCompatActivity {
     private void restoreLastSearch() {
         if (mSearchView != null) {
             String query = null;
-            if (searchviewContainsQuery()) {
+            if (searchViewContainsQuery()) {
                 query = mSearchView.getQuery().toString();
             } else if (mLastQuery != null) {
                 query = mLastQuery;

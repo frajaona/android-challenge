@@ -39,7 +39,7 @@ public class Producer implements Persistable {
         set(name, permalink, createdAt, updatedAt, images, shortDescription, description, location, viaWholesaler, wholesalerName);
     }
 
-    public void set(String name, String permalink, Date createdAt, Date updatedAt, List<Image> images, String shortDescription, String description, String location, boolean viaWholesaler, String wholesalerName) {
+    private void set(String name, String permalink, Date createdAt, Date updatedAt, List<Image> images, String shortDescription, String description, String location, boolean viaWholesaler, String wholesalerName) {
         mName = name;
         mPermalink = permalink;
         mCreatedAt = createdAt;

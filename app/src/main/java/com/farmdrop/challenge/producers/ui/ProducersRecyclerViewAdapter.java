@@ -31,12 +31,12 @@ public class ProducersRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
     @NonNull
     private final LayoutInflater mLayoutInflater;
 
-    @NonNull
+    @Nullable
     private final OnProducersListActionListener mOnProducersListActionListener;
 
     private boolean mAllProducersLoaded;
 
-    public ProducersRecyclerViewAdapter(@NonNull Context context, @NonNull OnProducersListActionListener onProducersListActionListener) {
+    public ProducersRecyclerViewAdapter(@NonNull Context context, @Nullable OnProducersListActionListener onProducersListActionListener) {
         mLayoutInflater = LayoutInflater.from(context);
         mOnProducersListActionListener = onProducersListActionListener;
     }
@@ -54,9 +54,9 @@ public class ProducersRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        if (holder instanceof ProducerViewHolder) {
+        if (mProducersList != null && holder instanceof ProducerViewHolder) {
             Producer producer = mProducersList.get(position);
-            ((ProducerViewHolder)holder).displayProducer(producer);
+            ((ProducerViewHolder) holder).displayProducer(producer);
         }
     }
 
@@ -71,7 +71,7 @@ public class ProducersRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
 
     @Override
     public int getItemViewType(int position) {
-        return position == mProducersList.size() ? TYPE_LOADING : TYPE_PRODUCER;
+        return mProducersList != null && position == mProducersList.size() ? TYPE_LOADING : TYPE_PRODUCER;
     }
 
     public void setProducersList(@NonNull List<Producer> producersList) {
@@ -93,10 +93,10 @@ public class ProducersRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         @Nullable
         private Producer mProducer;
 
-        @NonNull
+        @Nullable
         private final OnProducersListActionListener mProducersListActionListener;
 
-        public ProducerViewHolder(View itemView, @NonNull OnProducersListActionListener producersListActionListener) {
+        public ProducerViewHolder(View itemView, @Nullable OnProducersListActionListener producersListActionListener) {
             super(itemView);
             mProducersListActionListener = producersListActionListener;
             ButterKnife.bind(this, itemView);
@@ -105,7 +105,7 @@ public class ProducersRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         public void displayProducer(@NonNull Producer producer) {
             mProducer = producer;
             mNameTextView.setText(producer.getName());
-            String shortDescription = producer.getShortDescription();
+            String shortDescription = producer.getShortDescription().trim();
             if (!TextUtils.isEmpty(shortDescription)) {
                 mShortDescriptionTextView.setText(producer.getShortDescription());
             } else {
@@ -115,11 +115,13 @@ public class ProducersRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
 
         @OnClick(R.id.producers_recycler_view_item_layout_root)
         public void onClick() {
-            mProducersListActionListener.onProducerClick(mProducer);
+            if (mProducersListActionListener != null && mProducer != null) {
+                mProducersListActionListener.onProducerClick(mProducer);
+            }
         }
     }
 
-    static class ContentLoadingViewHolder  extends RecyclerView.ViewHolder {
+    static class ContentLoadingViewHolder extends RecyclerView.ViewHolder {
         public ContentLoadingViewHolder(View itemView) {
             super(itemView);
         }
