@@ -52,6 +52,7 @@ public class ProducerDetailsFragment extends Fragment {
         if (images == null || images.isEmpty()) {
             mImageView.setVisibility(View.GONE);
         } else {
+            mImageProgressBar.setVisibility(View.VISIBLE);
             Glide.with(this).load(images.get(0).getPath()).listener(new ImageLoadingListener(mImageProgressBar)).into(mImageView);
         }
 
