@@ -55,16 +55,16 @@ public class ProducerDetailsFragment extends Fragment {
             Glide.with(this).load(images.get(0).getPath()).listener(new ImageLoadingListener(mImageProgressBar)).into(mImageView);
         }
 
-        String location = producer.getLocation();
+        String location = producer.getLocation().trim();
         if (!TextUtils.isEmpty(location)) {
             mLocationTextView.setText(location);
         } else {
             mLocationTextView.setVisibility(View.GONE);
         }
 
-        String description = producer.getDescription();
+        String description = producer.getDescription().trim();
         if (TextUtils.isEmpty(description)) {
-            description = producer.getShortDescription();
+            description = producer.getShortDescription().trim();
         }
         if (!TextUtils.isEmpty(description)) {
             mDescriptionTextView.setText(description);

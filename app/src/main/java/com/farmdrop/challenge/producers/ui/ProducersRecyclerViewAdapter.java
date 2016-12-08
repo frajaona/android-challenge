@@ -105,7 +105,7 @@ public class ProducersRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         public void displayProducer(@NonNull Producer producer) {
             mProducer = producer;
             mNameTextView.setText(producer.getName());
-            String shortDescription = producer.getShortDescription();
+            String shortDescription = producer.getShortDescription().trim();
             if (!TextUtils.isEmpty(shortDescription)) {
                 mShortDescriptionTextView.setText(producer.getShortDescription());
             } else {
