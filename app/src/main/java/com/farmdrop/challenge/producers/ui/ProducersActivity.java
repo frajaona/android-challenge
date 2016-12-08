@@ -16,7 +16,6 @@ import com.farmdrop.challenge.producers.R;
 import com.farmdrop.challenge.producers.model.Producer;
 import com.farmdrop.challenge.producers.model.ProducersListener;
 import com.farmdrop.challenge.producers.model.ProducersSearchListener;
-import com.farmdrop.challenge.producers.model.provider.ProducersProvider;
 import com.farmdrop.challenge.producers.presenters.ProducersListPresenter;
 
 import java.util.List;
@@ -170,7 +169,7 @@ public class ProducersActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onError(@ProducersProvider.Error int error) {
+        public void onError(@ProducersListPresenter.Error int error) {
             mProducersListFragment.displayError(error);
         }
     }
