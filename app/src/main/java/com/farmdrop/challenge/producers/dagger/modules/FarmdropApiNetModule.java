@@ -1,7 +1,7 @@
 package com.farmdrop.challenge.producers.dagger.modules;
 
 import com.farmdrop.challenge.producers.BuildConfig;
-import com.farmdrop.challenge.producers.utils.AndroidNamingFieldStrategy;
+import com.farmdrop.challenge.producers.config.gson.AndroidNamingFieldStrategy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
