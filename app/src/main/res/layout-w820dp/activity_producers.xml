@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_producers_layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    tools:context="com.farmdrop.challenge.producers.ui.ProducersActivity">
+
+    <fragment
+        android:id="@+id/activity_producers_fragment_list"
+        class="com.farmdrop.challenge.producers.ui.ProducersListFragment"
+        android:layout_width="@dimen/producers_list_width"
+        android:layout_height="match_parent" />
+
+    <View
+        android:layout_width="@dimen/separator_line_thickness"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:background="@color/activity_producers_vertical_divider_color" />
+
+    <fragment
+        android:id="@+id/activity_producers_fragment_details"
+        class="com.farmdrop.challenge.producers.ui.ProducerDetailsFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="InconsistentLayout" />
+</LinearLayout>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/producers_recycler_view_loading_item_layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selectable_item_background"
+    android:orientation="vertical"
+    android:padding="@dimen/producers_recycler_view_item_padding">
+
+    <ProgressBar
+        android:id="@+id/producers_recycler_view_loading_item_progress_bar"
+        style="?android:progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" />
+</LinearLayout>

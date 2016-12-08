@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/producers_recycler_view_item_layout_root"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selectable_item_background"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/producers_recycler_view_item_padding"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/producers_recycler_view_item_padding">
+
+    <TextView
+        android:id="@+id/producers_recycler_view_item_textview_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/producers_recycler_view_item_name_size" />
+
+    <TextView
+        android:id="@+id/producers_recycler_view_item_textview_short_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/producers_recycler_view_item_short_description_margin_top"
+        android:ellipsize="end"
+        android:lines="@integer/producers_recycler_view_short_description_nb_lines"
+        android:textSize="@dimen/producers_recycler_view_item_short_description_size"
+        android:textStyle="italic" />
+
+</LinearLayout>
