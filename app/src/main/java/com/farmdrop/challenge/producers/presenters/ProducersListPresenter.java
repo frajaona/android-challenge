@@ -7,8 +7,9 @@ import android.support.annotation.Nullable;
 import android.util.SparseArray;
 
 import com.farmdrop.challenge.producers.model.Producer;
-import com.farmdrop.challenge.producers.model.ProducersListener;
-import com.farmdrop.challenge.producers.model.ProducersSearchListener;
+import com.farmdrop.challenge.producers.model.listener.NoErrorProducersListener;
+import com.farmdrop.challenge.producers.model.listener.ProducersListener;
+import com.farmdrop.challenge.producers.model.listener.ProducersSearchListener;
 import com.farmdrop.challenge.producers.model.provider.ProducersLocalProvider;
 import com.farmdrop.challenge.producers.model.provider.ProducersNetProvider;
 
@@ -73,7 +74,7 @@ public class ProducersListPresenter {
      * Local producers loading result listener.
      */
     @NonNull
-    private final ProducersListener mLocalProducersListener = new ProducersListener() {
+    private final ProducersListener mLocalProducersListener = new NoErrorProducersListener() {
         @Override
         public void onNewProducersLoaded(@NonNull List<Producer> producers) {
             if (producers.isEmpty()) {
@@ -90,27 +91,19 @@ public class ProducersListPresenter {
                 }
             }
         }
-
-        @Override
-        public void onError(@Error int error) {
-        }
     };
 
     /**
      * Update local producers from network result listener.
      */
     @NonNull
-    private final ProducersListener mUpdateLocalProducersListener = new ProducersListener() {
+    private final ProducersListener mUpdateLocalProducersListener = new NoErrorProducersListener() {
         @Override
         public void onNewProducersLoaded(@NonNull List<Producer> producers) {
             updateLocalProducersFromNetwork(producers);
             if (mListener != null) {
                 mListener.onNewProducersLoaded(mProducersList);
             }
-        }
-
-        @Override
-        public void onError(@Error int error) {
         }
     };
 
@@ -135,6 +128,11 @@ public class ProducersListPresenter {
         mProducersSparseArray = new SparseArray<>();
 
         loadProducers();
+    }
+
+    @NonNull
+    public List<Producer> getProducers() {
+        return mProducersList;
     }
 
     public void loadProducers() {
@@ -162,11 +160,6 @@ public class ProducersListPresenter {
 
     public void searchProducers(@NonNull String query) {
         mLocalProvider.searchProducers(query, mProducersSearchListener);
-    }
-
-    @NonNull
-    public List<Producer> getProducers() {
-        return mProducersList;
     }
 
     public void registerSearchListener(ProducersSearchListener producersSearchListener) {

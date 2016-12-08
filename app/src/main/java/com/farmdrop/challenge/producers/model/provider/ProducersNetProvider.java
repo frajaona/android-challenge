@@ -5,7 +5,7 @@ import android.support.annotation.NonNull;
 
 import com.farmdrop.challenge.producers.model.Pagination;
 import com.farmdrop.challenge.producers.model.Producer;
-import com.farmdrop.challenge.producers.model.ProducersListener;
+import com.farmdrop.challenge.producers.model.listener.ProducersListener;
 import com.farmdrop.challenge.producers.model.ProducersPage;
 import com.farmdrop.challenge.producers.presenters.ProducersListPresenter;
 

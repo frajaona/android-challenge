@@ -14,8 +14,8 @@ import android.view.MenuItem;
 import com.farmdrop.challenge.producers.ProducersApplication;
 import com.farmdrop.challenge.producers.R;
 import com.farmdrop.challenge.producers.model.Producer;
-import com.farmdrop.challenge.producers.model.ProducersListener;
-import com.farmdrop.challenge.producers.model.ProducersSearchListener;
+import com.farmdrop.challenge.producers.model.listener.ProducersListener;
+import com.farmdrop.challenge.producers.model.listener.ProducersSearchListener;
 import com.farmdrop.challenge.producers.presenters.ProducersListPresenter;
 
 import java.util.List;
