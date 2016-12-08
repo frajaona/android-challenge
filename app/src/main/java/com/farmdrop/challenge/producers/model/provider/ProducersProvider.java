@@ -8,6 +8,7 @@ import android.util.SparseArray;
 
 import com.farmdrop.challenge.producers.model.Producer;
 import com.farmdrop.challenge.producers.model.ProducersListener;
+import com.farmdrop.challenge.producers.model.ProducersSearchListener;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -36,12 +37,18 @@ public class ProducersProvider {
     @Nullable
     private ProducersListener mListener;
 
+    @Nullable
+    private ProducersSearchListener mSearchListener;
+
     @NonNull
     private final List<Producer> mProducersList;
 
     @NonNull
     private final SparseArray<Producer> mProducersSparseArray;
 
+    /**
+     * Network producers loading result listener.
+     */
     @NonNull
     private final ProducersListener mNetProducersListener = new ProducersListener() {
         @Override
@@ -60,6 +67,9 @@ public class ProducersProvider {
         }
     };
 
+    /**
+     * Local producers loading result listener.
+     */
     @NonNull
     private final ProducersListener mLocalProducersListener = new ProducersListener() {
         @Override
@@ -84,6 +94,9 @@ public class ProducersProvider {
         }
     };
 
+    /**
+     * Update local producers from network result listener.
+     */
     @NonNull
     private final ProducersListener mUpdateLocalProducersListener = new ProducersListener() {
         @Override
@@ -96,6 +109,19 @@ public class ProducersProvider {
 
         @Override
         public void onError(@Error int error) {
+        }
+    };
+
+    /**
+     * Search result listener.
+     */
+    @NonNull
+    private final ProducersSearchListener mProducersSearchListener = new ProducersSearchListener() {
+        @Override
+        public void onProducersFound(@NonNull String query, @NonNull List<Producer> producers) {
+            if (mSearchListener != null) {
+                mSearchListener.onProducersFound(query, producers);
+            }
         }
     };
 
@@ -130,6 +156,23 @@ public class ProducersProvider {
 
     public void unregisterListener() {
         mListener = null;
+    }
+
+    public void searchProducers(@NonNull String query) {
+        mLocalProvider.searchProducers(query, mProducersSearchListener);
+    }
+
+    @NonNull
+    public List<Producer> getProducers() {
+        return mProducersList;
+    }
+
+    public void registerSearchListener(ProducersSearchListener producersSearchListener) {
+        mSearchListener = producersSearchListener;
+    }
+
+    public void unregisterSearchListener() {
+        mSearchListener = null;
     }
 
     /**

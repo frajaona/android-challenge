@@ -17,6 +17,8 @@ import java.util.List;
 @Parcel
 @Table
 public class Producer implements Persistable {
+    public static final String NAMING_PRODUCER_NAME = "mName";
+
     int mId;
     String mName;
     String mPermalink;
